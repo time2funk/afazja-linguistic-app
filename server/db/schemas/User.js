@@ -6,6 +6,6 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
 }, {
-    collection: "edge"
+    collection: "user"
 });
 module.exports = UserSchema;

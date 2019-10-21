@@ -15,5 +15,5 @@ module.exports.connect = async function (config) {
 };
 
 function initModels() {
-    mongoose.model("user", UserSchema);
+    mongoose.model("User", UserSchema);
 }

@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const express = require('express');
 const router = express.Router();
 
@@ -31,6 +32,18 @@ router.get('/', function (req, res) {
     const lexem = nlp.getLexem(words[0]);
     result.push(` [ lexem ] - ${words[0]} (adj 2 noun)`, nlp.getAllFormsOf(lexem).map(a => a.toString()));
 
-    res.status(500).json({ data: result });
+    res.status(200).json({ data: result });
 });
 module.exports = router;
+
+
+router.post('/', function (req, res) {
+    const name = req.body.name;
+    const UserSchema = mongoose.model('User');
+    const user = new UserSchema({name});
+    user.save();
+    res.send({result: user});
+        // }).catch(e => {
+        //     res.status(500);
+        // });
+});

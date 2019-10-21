@@ -20,18 +20,19 @@ global.nlp = new NLP();
 (async () => {
     const modelname = path.join(__basedir, 'model', 'dict.lzma');
 
+    // get model
     const modelFileBuffer = await getBufferFromFile(modelname).then(result => {
         console.log('[ fs ]', 'model file loaded');
         return result;
     });
 
-
+    // decompress model
     const modelData = await lzmaDecompress(modelFileBuffer).then(result => {
         console.log('[ lzma ]', 'model decompressed');
         return result;
     });
 
-
+    // load model to nlp
     await nlp.load(toArrayBuffer(modelData)).then(() => {
         console.log('[ nlp ]', 'model loaded');
     });
@@ -46,31 +47,6 @@ global.nlp = new NLP();
     http.createServer(server).listen(config.server.port, () => {
         console.log('[ express ]', 'server started');
     });
-
-    // // testing
-    // const words = [
-    //     'przyjaciela',
-    //     'ciągu',
-    //     'narodził',
-    //     'już',
-    //     '1832',
-    //     'Według',
-    //     'informował',
-    //     'długi',
-    //     'trudny'
-    // ];
-    // console.log(' - ----------------------------- -');
-    // for (let i = 0; i < words.length; i++) {
-    //     const lexem = nlp.getLexem(words[i]);
-    //     if (lexem)
-    //         console.log(` [ lexem ] - ${words[i]}`, lexem.getPOS());
-    //     else
-    //         console.log(` [ lexem ] - ${words[i]}`, lexem);
-    // }
-    // console.log(' - ----------------------------- -');
-
-    // const lexem = nlp.getLexem(words[0]);
-    // console.log(` [ lexem ] - ${words[0]} (adj 2 noun)`, nlp.getAllFormsOf(lexem).map(a => a.toString()));
 
 })().catch(e => {
     console.error('[ ! ]', 'oops');
