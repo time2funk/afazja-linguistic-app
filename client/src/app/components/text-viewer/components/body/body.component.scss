@@ -1,0 +1,20 @@
+.text-viewer-body {
+    padding: 30px 0;
+    height: calc(100vh - 392px - 76px);
+    overflow-y: scroll;
+
+    p.text-p {
+        text-align: justify;
+        font-size: 3em;
+        margin-bottom: 60px;
+    }
+
+    div.next-btn-block {
+        text-align: center;
+
+        & > button {
+            width: 100%;
+            font-size: 3em;
+        }
+    }
+}
