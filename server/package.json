@@ -1,0 +1,18 @@
+{
+  "name": "afazja-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.7.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "lzma": "^2.3.2",
+    "mongoose": "^5.7.5"
+  }
+}
