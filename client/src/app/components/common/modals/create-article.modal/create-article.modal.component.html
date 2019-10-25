@@ -1,0 +1,101 @@
+<div role="document" class="modal-dialog">
+
+    <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header bg-info">
+            <h4 class="modal-title">
+                {{ title }}
+            </h4>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="formGroup">
+                <div class="container-fluid">
+                    <!-- Name -->
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="form-client-name">Name</label>
+                            <input type="text" 
+                                    class="form-control" 
+                                    id="form-name" 
+                                    autofocus
+                                    formControlName="name" 
+                                    [ngClass]="{ 
+                                        'is-invalid': submitted && f.name.errors 
+                                    }">
+                            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                <div *ngIf="f.name.errors.required">
+                                    Article Name is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Content -->
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="form-level">Level</label>
+                            <input type="text"
+                                    class="form-control" 
+                                    id="form-level" 
+                                    autofocus
+                                    formControlName="level" 
+                                    [ngClass]="{ 
+                                        'is-invalid': submitted && f.level.errors 
+                                    }">
+                            <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
+                                <div *ngIf="f.level.errors.required">
+                                    Article level is required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Article Content -->
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="form-client-note">Content</label>
+                            <textarea class="form-control" 
+                                    id="form-content" 
+                                    rows="3" 
+                                    formControlName="content">
+                            </textarea>
+                        </div>
+                        <div *ngIf="submitted && f.content.errors" class="invalid-feedback">
+                            <div *ngIf="f.content.errors.required">
+                                Article Content is required
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Error Handler -->
+                    <div class="row" *ngIf="error">
+                        <div class="col">
+                            <div class="alert alert-danger">{{error}}</div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <!-- Footer Buttons -->
+        <div class="modal-footer bg-light">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-secondary btn-block"
+                            (click)="activeModal.close('Close click')">
+                            Cancel
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-success btn-block" (click)="submitHandler()">
+                            Create
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

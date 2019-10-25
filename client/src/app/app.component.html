@@ -1,6 +1,7 @@
-<div>
-    <app-nav-bar
-        [title]="title"
-    ></app-nav-bar>
-    <app-viewer-entry></app-viewer-entry>
+<div id="app-component">
+    <!-- ROUTER -->
+    <router-outlet></router-outlet>
+
+    <!-- PRELOADER -->
+    <app-preloader></app-preloader>
 </div>
