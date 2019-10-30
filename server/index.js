@@ -5,7 +5,6 @@ const http = require('http')
 const path = require('path');
 
 const config = require('./config');
-const router = require('./router');
 const db = require('./db');
 const {
     toArrayBuffer,
@@ -43,9 +42,9 @@ global.nlp = new NLP();
     // start the server
     const server = express();
     server.use(bodyParser.json({ limit: '50mb' }));
-    server.use(router);
+    server.use(require('./router'));
     http.createServer(server).listen(config.server.port, () => {
-        console.log('[ express ]', 'server started');
+        console.log('[ express ]', 'server started', config.server.port);
     });
 
 })().catch(e => {

@@ -1,49 +1,48 @@
-const mongoose = require("mongoose");
 const express = require('express');
 const router = express.Router();
 
+const controller = require('../controller');
+
+// middleware
 router.get('/', function (req, res, next) {
     next();
 });
 
-router.get('/', function (req, res) {
-    const result = [];
-    const words = [
-        'przyjaciela',
-        'ciągu',
-        'narodził',
-        'już',
-        '1832',
-        'Według',
-        'informował',
-        'długi',
-        'trudny'
-    ];
-    result.push(' - ----------------------------- -');
-    for (let i = 0; i < words.length; i++) {
-        const lexem = nlp.getLexem(words[i]);
-        if (lexem)
-            result.push(` [ lexem ] - ${words[i]}`, lexem.getPOS());
-        else
-            result.push(` [ lexem ] - ${words[i]}`, lexem);
-    }
-    result.push(' - ----------------------------- -');
-
-    const lexem = nlp.getLexem(words[0]);
-    result.push(` [ lexem ] - ${words[0]} (adj 2 noun)`, nlp.getAllFormsOf(lexem).map(a => a.toString()));
-
+router.get('/test', function (req, res) {
+    const result = controller.test();
     res.status(200).json({ data: result });
+});
+
+router.get('/article/all', async function (req, res) {
+    return controller.getArticles()
+        .then(result => res.status(200).json(result))
+        .catch(e => res.status(500).json({msg: 'Something broke', error: e}));
+});
+
+router.get('/article/:id', async function (req, res) {
+    const id = req.params.id;
+    
+    return controller.getArticle(id)
+        .then(result => res.status(200).json(result))
+        .catch(e => res.status(500).json({msg: 'Something broke', error: e}));
+});
+
+router.post('/article/new', async function (req, res) {
+    const text = req.body.text;
+    const name = req.body.name;
+    
+    return controller.createArticle(text, name)
+        .then(result => res.status(200).json(result))
+        .catch(e => res.status(500).json({msg: 'Something broke', error: e}));
 });
 module.exports = router;
 
 
-router.post('/', function (req, res) {
-    const name = req.body.name;
-    const UserSchema = mongoose.model('User');
-    const user = new UserSchema({name});
-    user.save();
-    res.send({result: user});
-        // }).catch(e => {
-        //     res.status(500);
-        // });
-});
+// router.post('/', function (req, res) {
+//     const name = req.body.name;
+//     const UserSchema = mongoose.model('User');
+//     res.send({result: user});
+//         // }).catch(e => {
+//         //     res.status(500);
+//         // });
+// });
