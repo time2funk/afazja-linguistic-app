@@ -10,6 +10,10 @@ const ArticleSchema = new mongoose.Schema({
             type: Number,
             required: true,
         },
+        text: {
+            type: String,
+            required: true,
+        },
         parts: [{
             index: {
                 type: Number,
@@ -17,7 +21,7 @@ const ArticleSchema = new mongoose.Schema({
             },
             text: {
                 type: String,
-                required: true,
+                // required: true,
             },
             type: {
                 type: String, // text | word

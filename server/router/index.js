@@ -5,6 +5,7 @@ const controller = require('../controller');
 
 // middleware
 router.get('/', function (req, res, next) {
+    console.log({req});
     next();
 });
 

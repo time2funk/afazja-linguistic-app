@@ -35,13 +35,9 @@ const ArticleController = {
     }),
 
     createArticle: async (text, name) => {
-        return ArticelMaker.splitTextIntoSentences(text)
-            // .then(sentences => {
-            //     const article = Article.create({ name, sentences });
-            //     return {
-            //         data: article._id
-            //     };
-            // });
+        const sentences = ArticelMaker.splitTextIntoSentences(text);
+        console.log({sentences})
+        return Article.create({ name, sentences }).then(article => ({id: article._id}));
     },
 
     // sync test

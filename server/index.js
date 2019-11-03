@@ -1,6 +1,7 @@
 global.__basedir = __dirname;
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const http = require('http')
 const path = require('path');
 
@@ -41,6 +42,7 @@ global.nlp = new NLP();
 
     // start the server
     const server = express();
+    server.use(cors());
     server.use(bodyParser.json({ limit: '50mb' }));
     server.use(require('./router'));
     http.createServer(server).listen(config.server.port, () => {

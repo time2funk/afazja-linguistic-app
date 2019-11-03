@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ToolBarComponent } from './components/common/tool-bar/tool-bar.component';
+// import { ToolBarComponent } from './components/common/tool-bar/tool-bar.component';
 import { TextViewerModule } from './components/text-viewer/text-viewer.module';
 import { ApiService } from './services/api.service';
 import { LibraryPageComponent } from './components/pages/library-page/library-page.component';
@@ -20,7 +20,7 @@ import { PreloaderComponent } from './components/common/preloader/preloader.comp
 @NgModule({
     declarations: [
         AppComponent,
-        ToolBarComponent,
+        // ToolBarComponent,
         LibraryPageComponent,
         ArticlePageComponent,
         PictureTooltipComponent,
@@ -36,7 +36,7 @@ import { PreloaderComponent } from './components/common/preloader/preloader.comp
         HttpClientModule,
         FormsModule,
         AppRoutingModule,
-        // FontAwesomeModule,
+        FontAwesomeModule,
     ],
     providers: [ApiService],
     bootstrap: [AppComponent],

@@ -1,0 +1,19 @@
+.tool-bar {
+    border-bottom: 1px solid; 
+    & > div {
+        padding: 2px 0;
+    }
+}
+
+.article-block {
+    text-align: center;
+    border: 1px solid aliceblue;
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+        border: 1px solid black;
+    }
+    & > .pic {
+        font-size: 40px;
+    }
+}

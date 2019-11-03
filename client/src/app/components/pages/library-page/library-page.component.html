@@ -1,3 +1,49 @@
-<p>
-  library-page works!
-</p>
+<div class="library-page">
+    <div class="container-fluid">
+
+        <div class="row tool-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="btn-toolbar justify-content-between py-2" role="toolbar">
+                            <div class="input-group toolbar-btn-switch">
+                                <div class="btn-group" role="group">
+                                    <!-- CREATE ARTICLE -->
+                                    <button type="button" 
+                                            class="btn btn-outline-dark px-5"
+                                            (click)="openModal()">
+                                        <fa-icon [icon]="faPlusIcon"></fa-icon>
+                                        Create Article
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row body">
+            <div class="container">
+                <div class="row">
+
+                    <div *ngFor="let article of articleList"
+                            class="col-sm-2 col-md-3 col-lg-4">
+                        <div class="article-block mt-4" (click)="openArticle(article._id)">
+                            <div class="pic">
+                                <img src="../../../../assets/book.svg" width="50" alt="Article">
+                                <!-- <fa-icon [icon]="faJournalWhillsIcon"></fa-icon> -->
+                            </div>
+                            <div class="name">
+                                {{ article.name }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

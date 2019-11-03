@@ -41,7 +41,7 @@ export class CreateArticleModalComponent implements OnInit {
     private initForm(): void {
         this.formGroup = this.formBuilder.group({
             name: [null, Validators.required],
-            level: [null, Validators.required],
+            // level: [null, Validators.required],
             text: [null, Validators.required],
         });
     }
@@ -52,24 +52,23 @@ export class CreateArticleModalComponent implements OnInit {
 
         const article = {
             name: this.f.name.value,
-            level: this.f.level.value,
+            // level: this.f.level.value,
             text: this.f.text.value,
         }
         this.loader.show();
         this.api.createArticle(article)
             .subscribe(
                 data => {
-                    if (data.success) {
-                        const responce = {
+                    if (data.id) {
+                        this.activeModal.close({
                             name: article.name,
                             id: data.id,
-                        };
-                        this.activeModal.close(responce);
-                    }
+                            success: true,
+                        });
+                    } 
                 },
-                error => {
-                    this.error = error;
-                },
-                () => this.loader.hide());
+                error => this.error = error,
+                () => this.loader.hide()
+            );
     }
 }

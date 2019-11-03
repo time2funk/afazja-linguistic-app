@@ -8,20 +8,11 @@ const whiteSpaceRegex = /\S+/;
 
 const boundaryRegex = /\b/;
 
-const wordRegex = /\w+/;
+const wordRegex = /[ĄąĆćĘęŁłŃńÓóŚśŹźŻż\w]+/; // polish
 
 const sentenceSplit = new RegExp(
     endCharsRegex.source, 'g'
 );
-// const wordSplit = new RegExp(
-//     `${boundaryRegex.source}|${whiteSpaceRegex.source}|${splitChars.source}`, 'g'
-// );
-// const checkWord = new RegExp(
-//     wordRegex.source, "i"
-// );
-// const wordWrapChars = new RegExp(
-//     `^${specialCharsRegex.source}|${specialCharsRegex.source}$`
-// );
 
 const wordWrap = (word, type, index) => ({
     type: 'word',
@@ -57,11 +48,11 @@ const ArticleMaker = {
             part += sentence.substring(0, start_pos);
 
             if (wordType(word) === 'NOUN') {
-                parts.push(
-                    textWrap(part, iter++),
-                    wordWrap(word, 'noun', iter++),
-                );
-                part = '';
+                if (part) {
+                    parts.push(textWrap(part, iter++));
+                    part = '';
+                }
+                parts.push(wordWrap(word, 'noun', iter++));
             } else {
                 part += word;
             }
@@ -70,7 +61,9 @@ const ArticleMaker = {
             sentence = sentence.slice(last_pos);
         }
         part += sentence;
-        parts.push(textWrap(part, iter));
+        if (part) {
+            parts.push(textWrap(part, iter));
+        }
         return parts;
     },
 
@@ -78,7 +71,10 @@ const ArticleMaker = {
         if (!text) reject('no text');
 
         const result = [];
-        const sentences = text.match(sentenceSplit);
+        let sentences = text.match(sentenceSplit);
+        if (text && !sentences) {
+            sentences = [text];
+        }
 
         for (let i = 0; i < sentences.length; i++) {
             const sentence = sentences[i];
@@ -88,6 +84,7 @@ const ArticleMaker = {
             const parts = ArticleMaker.splitSentenceIntoParts(sentence, []);
             result.push({
                 index: i,
+                text: sentence,
                 parts,
             });
         }

@@ -15,7 +15,7 @@ const routes: Routes = [
         component: LibraryPageComponent,
     },
     { 
-        path: 'article', 
+        path: 'article/:id', 
         component: ArticlePageComponent,
     },
     { 

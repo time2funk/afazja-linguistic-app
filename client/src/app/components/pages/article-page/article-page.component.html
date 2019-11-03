@@ -1,3 +1,115 @@
-<p>
-  article-page works!
-</p>
+<div class="article-page">
+    <div class="container-fluid">
+
+        <div class="row article-header">
+            <div class="container">
+                <div class="row h-100">
+
+                    <div class="left-btn-action">
+                    </div>    
+
+                    <div class="title">
+                        <h1>{{ article.name }}</h1>
+                    </div>
+                    
+                    <div class="right-btn-action">
+                        <!-- exit the article -->
+                        <a class="close" (click)="backToLibrary()"></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 body">
+            <div class="container">
+                <div class="row">
+
+                    <ng-template #sentenceList>
+                        <ul class="sentence-list">
+                            <li *ngFor="let sentence of article.sentences" class="mt-4">
+                                <a href="javascript:void(0);" (click)="sentenceSelect(sentence.index)">
+                                    <span>
+                                        {{ sentence.text | slice:0:50 }} ...
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </ng-template>
+
+                    <div class="w-100" *ngIf="currentSentence; else sentenceList">
+                        <!-- TEXT -->
+                        <div class="sentence-text"
+                                *ngIf="!currentSentence.preview">
+                            {{ currentSentence.text }}
+                        </div>
+                        <!-- PARTS -->
+                        <div class="sentence-text"
+                                *ngIf="currentSentence.preview">
+
+                            <!-- <form action=""> -->
+                                <span *ngFor="let part of currentSentence.parts">
+                                    <span *ngIf="part.type === 'text' || part.type === 'word' && !part.ask">
+                                        {{ part.text }}
+                                    </span>
+                                    <span *ngIf="part.type === 'word' && part.ask"
+                                            class="word"
+                                            [ngClass]="{
+                                                'all-good': part.success,
+                                                'error': !part.success
+                                            }" >
+                                        <input type="text" 
+                                                [(ngModel)]="answers[part.index]" 
+                                                (ngModelChange)="wordChangeHandler($event, part)"
+                                                required 
+                                                [attr.disabled]="part.success ? '' : null" >
+                                    </span>
+                                </span>
+                            <!-- </form> -->
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 footer" *ngIf="currentSentence">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+
+                    <!-- sentences -->
+                    <div class="btn-sentences" *ngIf="currentSentence">
+                        <button class="btn btn-outline-info" (click)="backToSentences()">
+                            <fa-icon [icon]="faAngleLeftIcon"></fa-icon>
+                            sentences
+                        </button>
+                    </div>
+
+                    <!-- do assignment -->
+                    <div class="btn-assignment" *ngIf="!currentSentence.preview">
+                        <button class="btn btn-outline-info" (click)="doAssignment()">
+                            Do Assignment
+                        </button>
+                    </div>
+                    
+                    <!-- OR go next sentence -->
+                    <div class="btn-next-sen" *ngIf="currentSentence.preview && !isLastSentence(currentSentence.index)">
+                        <button class="btn btn-outline-info" (click)="sentenceSelect(currentSentence.index + 1)">
+                            Next Sentence
+                        </button>
+                    </div>
+
+                    <!-- finish -->
+                    <div class="btn-next-sen" *ngIf="currentSentence.preview && isLastSentence(currentSentence.index)">
+                        <button class="btn btn-outline-success" (click)="backToLibrary()">
+                            Finish
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
