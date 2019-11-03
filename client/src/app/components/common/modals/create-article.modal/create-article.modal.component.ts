@@ -29,7 +29,7 @@ export class CreateArticleModalComponent implements OnInit {
         private api: ApiService,
         private loader: PreloaderService,
         private formBuilder: FormBuilder,
-        private activeModal: NgbActiveModal,
+        public activeModal: NgbActiveModal,
     ) { }
 
     public ngOnInit(): void {
