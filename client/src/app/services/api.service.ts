@@ -25,8 +25,12 @@ export class ApiService {
         return this.http.post<any>(`${this.url}/article/new`, options);
     }
 
-    public wordCheck(options: {answer: string, word: string}): Observable<boolean> {
-        return this.http.post<boolean>(`${this.url}/answer/check`, options);
+    public updateArticle(article): Observable<any> {
+        return this.http.post<any>(`${this.url}/article/${article._id}`, {article});
+    }
+
+    public deleteArticle(id): Observable<any> {
+        return this.http.delete<any>(`${this.url}/article/${id}`);
     }
 
 }

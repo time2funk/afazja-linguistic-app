@@ -3,9 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {
     faPlus,
-    faJournalWhills,
     IconDefinition,
+    faBars,
 } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faTrashAlt,
+    faEdit,
+} from '@fortawesome/free-regular-svg-icons';
 import { Subscription } from 'rxjs';
 
 import { ApiService } from '../../../services/api.service';
@@ -19,68 +23,72 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class LibraryPageComponent implements OnInit, OnDestroy {
 
-    public faPlusIcon: IconDefinition;
-    public faJournalWhillsIcon: IconDefinition;
-    private subscribe: any;
-    private currentModalRef: NgbModalRef;
-
+    public faPlusIcon: IconDefinition = faPlus;
+    public faBarsIcon: IconDefinition = faBars;
+    public faTrashIcon: IconDefinition = faTrashAlt;
+    public faEditIcon: IconDefinition = faEdit;
+    private subscribes: Subscription[] = [];
     public articleList: any[];
-    // test
-    public testArticleList: any[] = [
-        {
-            name: 'Article 1',
-            id: 123,
-        },
-        {
-            name: 'Article 2',
-            id: 124,
-        },
-        {
-            name: 'Article 3',
-            id: 125,
-        },
-        {
-            name: 'Lorem Ipsum',
-            id: 126,
-        },
-        {
-            name: 'Journal Whills',
-            id: 127,
-        },
-    ];
 
     constructor(
         private router: Router,
-        // private route: ActivatedRoute,
         private api: ApiService,
         private loader: PreloaderService,
         private modalService: ModalService,
-    ) {
-        this.faPlusIcon = faPlus;
-        this.faJournalWhillsIcon = faJournalWhills;
-    }
+    ) { }
 
     public ngOnInit() {
-        this.subscribe = this.getArticles();
+        this.getArticles();
     }
 
     public ngOnDestroy() {
-        if (this.subscribe) {
-            this.subscribe.unsubscribe();
+        if (this.subscribes.length) {
+            this.subscribes.forEach(s => s.unsubscribe());
         }
     }
 
-    public openArticle(id) {
-        this.router.navigate([`/article/${id}`]);
-        // this.router.navigate([`${link.split('?')[0]}`], { queryParams: { id: 37, username: 'jimmy' } });
+    public deleteArticle(article) {
+        if (!confirm('Jesteś pewny ?')) {
+            return;
+        }
+        this.loader.show();
+        const subscribe = this.api.deleteArticle(article._id).subscribe(
+            res => {
+                this.loader.hide();
+                const index = this.articleList.findIndex(i => i._id === article._id);
+                if (index > -1) {
+                    this.articleList.splice(index, 1);
+                }
+            },
+            error => {
+                console.error({ error });
+                this.loader.hide();
+            },
+        );
+        this.subscribes.push(subscribe);
     }
 
-    public openModal() {
-        this.currentModalRef = this.modalService.openCreateArticleModal();
-        this.currentModalRef.result.then(
+    public openEditArticleModal(article) {
+        const currentModalRef: NgbModalRef = this.modalService.openArticleModal(article);
+        currentModalRef.result.then(
             responce => {
                 if (responce.success) {
-                    this.updateArticleList(responce.id, responce.name)
+                    this.updateArticle(responce.article);
+                }
+            },
+            reason => {
+                // on Close Event 
+            }
+        );
+
+    }
+
+    public openCreateArticleModal() {
+        const currentModalRef: NgbModalRef = this.modalService.openArticleModal();
+        currentModalRef.result.then(
+            responce => {
+                if (responce.success) {
+                    this.addArticle(responce.article);
                 }
             },
             reason => {
@@ -89,19 +97,51 @@ export class LibraryPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    private updateArticleList(id, name) {
-        this.articleList.push({
-            name,
-            _id: id
-        });
+    public openAssessmentConfigModal(article, event) {
+        if (event.target.closest('.dropdown')) {
+            return;
+        }
+        
+        const currentModalRef: NgbModalRef = this.modalService.openAssessmentConfigModal(article);
+        currentModalRef.result.then(
+            responce => {
+                if (responce.success) {
+                    console.log({ responce })
+                    this.router.navigate(['/article', article._id, { level: responce.config.level }]);
+                }
+            },
+            reason => {
+                // on Close Event 
+            }
+        );
     }
 
-    private getArticles(): Subscription {
+    private updateArticle(newArticle): void {
+        const oldArticle = this.articleList.find(i => i._id === newArticle._id);
+        Object.assign(oldArticle, {
+            sentences: newArticle.sentences,
+            name: newArticle.name,
+            text: newArticle.text,
+        });
+        console.log({oldArticle, newArticle})
+    }
+
+    private addArticle(article) {
+        this.articleList.push(article);
+    }
+
+    private getArticles(): void {
         this.loader.show();
-        return this.api.getArticles().subscribe(
-            (res) => this.articleList = Array.from(res.data),
-            (error: any) => console.error({ error }),
-            () => this.loader.hide()
+        const subscribe = this.api.getArticles().subscribe(
+            res => {
+                this.loader.hide();
+                this.articleList = Array.from(res.data);
+            },
+            error => {
+                console.error({ error });
+                this.loader.hide();
+            }
         );
+        this.subscribes.push(subscribe);
     }
 }

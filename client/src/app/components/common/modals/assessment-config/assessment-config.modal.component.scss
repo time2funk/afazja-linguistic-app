@@ -1,0 +1,22 @@
+.info-text {
+    padding-left: 20px;
+    color: #437375;
+    font-size: 1.1em;
+    // font-weight: bold;
+}
+.form-group {
+    & > label {
+        font-weight: bold;
+    }
+}
+.radio-group {
+    padding-left: 20px;
+    
+    label {
+        cursor: pointer;
+    }
+    .form-check {
+        font-weight: 400;
+        margin-bottom: 5px;
+    }
+}

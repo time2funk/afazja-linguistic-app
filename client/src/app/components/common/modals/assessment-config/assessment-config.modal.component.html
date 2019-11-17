@@ -1,0 +1,77 @@
+<div role="document" class="modal-dialog">
+
+    <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">
+                {{ title }}
+            </h4>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <form [formGroup]="formGroup">
+                <div class="container-fluid">
+                    <!-- Name -->
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="form-client-name">Nazwa Artykułu</label>
+                            <div class="info-text">
+                                {{ config.name }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Size -->
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="form-client-name">Rozmiar Artykułu</label>
+                            <div class="info-text">
+                                {{ config.sentences.length === 1 
+                                    ? 'Jedno zdanie'
+                                    : config.sentences.length + ' zdań'
+                                }}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Level -->
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="form-client-name">Wybierz poziom trudności</label>
+                            <div class="radio-group">                            
+                                <div class="form-check" *ngFor="let levelType of levelTypes">
+                                    <input class="form-check-input" type="radio"
+                                            id="ctrl-radio-{{levelType.name}}" 
+                                            formControlName="level"
+                                            [value]="levelType.name" >
+                                    <label class="form-check-label" for="ctrl-radio-{{levelType.name}}">
+                                    {{ levelType.label }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Footer Buttons -->
+        <div class="modal-footer bg-light">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <button type="button" class="btn btn-secondary btn-block"
+                            (click)="activeModal.close('Close click')">
+                            Anulować
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-info btn-block" (click)="submitHandler()">
+                            Start
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

@@ -1,8 +1,8 @@
 .tool-bar {
-    border-bottom: 1px solid; 
-    & > div {
-        padding: 2px 0;
-    }
+  border-bottom: 1px solid;
+  & > div {
+    padding: 2px 0;
+  }
 }
 
 // .a-btn-close {
@@ -20,86 +20,92 @@
 // }
 
 .article-header {
-    min-height: 70px;
-    // background: lightblue;
-    border-bottom: 1px solid cadetblue;
+  min-height: 70px;
+  // background: lightblue;
+  border-bottom: 1px solid cadetblue;
 
-    .title {
-        width: calc(100% - 100px);
-        padding: 0 20px;
-        text-align: center;
+  .title {
+    width: calc(100% - 100px);
+    padding: 0 20px;
+    text-align: center;
 
-        h1 {
-            line-height: 1.5;
-        }
+    h1 {
+      line-height: 1.5;
     }
-    // .title,
-    // .left-btn-action,
-    // .right-btn-action {
-    //     float: left;
-    // }
-    .left-btn-action,
-    .right-btn-action {
-        width: 50px;
-        height: 100%;
-    }
-    // .left-btn-action button {
-    //     width: 100%;
-    //     height: 100%;
-    // }
+  }
+  // .title,
+  // .left-btn-action,
+  // .right-btn-action {
+  //     float: left;
+  // }
+  .left-btn-action,
+  .right-btn-action {
+    width: 50px;
+    height: 100%;
+  }
+  // .left-btn-action button {
+  //     width: 100%;
+  //     height: 100%;
+  // }
 
-    .left-btn-action {
-        font-size: 40px;
-        color:#45484a;
-        vertical-align: bottom;
-        text-align: center;
-    }
+  .left-btn-action {
+    font-size: 40px;
+    color: #45484a;
+    vertical-align: bottom;
+    text-align: center;
+  }
 
-    .right-btn-action {
-        padding-top: 10px;
-    }
+  .right-btn-action {
+    padding-top: 10px;
+  }
+}
+
+.info-text {
+  color: gray;
+  font-size: 1.8em;
+  padding: 20px;
+  font-weight: 300;
+  letter-spacing: 2px;
 }
 
 .sentence-text {
-    padding: 20px 0;
-    font-size: 2em;
-    // border-top: 1px solid seagreen;
-    border-bottom: 1px solid seagreen;
+  padding: 20px;
+  font-size: 2em;
+  // border-top: 1px solid seagreen;
+  // border-bottom: 1px solid seagreen;
 
-    & > div {
-        display: inline-block;
-    }
+  & > div {
+    display: inline-block;
+  }
 }
 
 .sentence-list {
-    span {
-        font-size: 25px;
-    }
+  span {
+    font-size: 25px;
+  }
 }
 
 a {
-    color: cadetblue;
+  color: cadetblue;
 
-    &:hover {
-        color: black;
-    }
+  &:hover {
+    color: black;
+  }
 }
 
 .word {
-
+  input {
+    border-radius: 12px;
+    border: 2px solid cadetblue;
+  }
+  &.all-good {
     input {
-        border-radius: 12px;
-        border: 2px solid cadetblue;
+      border-color: #02b370;
     }
-    &.all-good {
-        input {
-            border-color: #02b370;
-        }
+  }
+  &.error {
+    input {
+      border-color: orange;
     }
-    &.error {
-        input {
-            border-color: orange;
-        }
-    }
-
+  }
 }

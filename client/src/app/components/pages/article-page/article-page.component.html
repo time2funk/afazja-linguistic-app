@@ -1,14 +1,14 @@
 <div class="article-page">
     <div class="container-fluid">
 
-        <div class="row article-header">
+        <div class="row article-header pt-5">
             <div class="container">
                 <div class="row h-100">
 
                     <div class="left-btn-action">
                     </div>    
 
-                    <div class="title">
+                    <div class="title" *ngIf="article && article.name">
                         <h1>{{ article.name }}</h1>
                     </div>
                     
@@ -21,33 +21,46 @@
             </div>
         </div>
 
-        <div class="row mt-5 body">
+        <div class="row mt-3 body" *ngIf="article && article.sentences && article.sentences.length">
             <div class="container">
                 <div class="row">
-
                     <ng-template #sentenceList>
-                        <ul class="sentence-list">
-                            <li *ngFor="let sentence of article.sentences" class="mt-4">
+                        <div class="w-100 info-text mt-3">
+                            Zdania :
+                        </div>
+                        <ol class="sentence-list">
+                            <li *ngFor="let sentence of article.sentences" class="mt-4 pl-2">
                                 <a href="javascript:void(0);" (click)="sentenceSelect(sentence.index)">
                                     <span>
                                         {{ sentence.text | slice:0:50 }} ...
                                     </span>
                                 </a>
                             </li>
-                        </ul>
+                        </ol>
                     </ng-template>
 
                     <div class="w-100" *ngIf="currentSentence; else sentenceList">
-                        <!-- TEXT -->
-                        <div class="sentence-text"
-                                *ngIf="!currentSentence.preview">
-                            {{ currentSentence.text }}
-                        </div>
-                        <!-- PARTS -->
-                        <div class="sentence-text"
-                                *ngIf="currentSentence.preview">
 
-                            <!-- <form action=""> -->
+                        <!-- Preview -->
+                        <ng-container *ngIf="!currentSentence.preview">
+                            <div class="w-100 info-text">
+                                <fa-icon class ="text-info" [icon]="faInfoCircleIcon"></fa-icon>
+                                Uważnie przeczytaj tekst
+                            </div>
+                            <hr>
+                            <div class="sentence-text">
+                                {{ currentSentence.text }}
+                            </div>
+                        </ng-container>
+
+                        <!-- Assessment-->
+                        <ng-container *ngIf="currentSentence.preview">
+                            <div class="w-100 info-text">
+                                <fa-icon class ="text-info" [icon]="faInfoCircleIcon"></fa-icon>
+                                Uzupełnij brakujące słowa
+                            </div>
+                            <hr>
+                            <div class="sentence-text">
                                 <span *ngFor="let part of currentSentence.parts">
                                     <span *ngIf="part.type === 'text' || part.type === 'word' && !part.ask">
                                         {{ part.text }}
@@ -65,44 +78,44 @@
                                                 [attr.disabled]="part.success ? '' : null" >
                                     </span>
                                 </span>
-                            <!-- </form> -->
-                            
-                        </div>
+                            </div>
+                        </ng-container>
                     </div>
 
                 </div>
             </div>
         </div>
-
         <div class="row mt-4 footer" *ngIf="currentSentence">
             <div class="container">
-                <div class="row d-flex justify-content-between">
-
+                <div class="row">
+                    <div class="w-100"><hr></div>
+                </div>
+                <div class="d-flex justify-content-between">
                     <!-- sentences -->
                     <div class="btn-sentences" *ngIf="currentSentence">
-                        <button class="btn btn-outline-info" (click)="backToSentences()">
+                        <button class="btn btn-outline-info px-2" (click)="backToSentences()">
                             <fa-icon [icon]="faAngleLeftIcon"></fa-icon>
-                            sentences
+                            Zdania
                         </button>
                     </div>
-
+                    
                     <!-- do assignment -->
                     <div class="btn-assignment" *ngIf="!currentSentence.preview">
-                        <button class="btn btn-outline-info" (click)="doAssignment()">
-                            Do Assignment
+                        <button class="btn btn-outline-info px-2" (click)="doAssignment()">
+                            Wykonaj zadanie
                         </button>
                     </div>
                     
                     <!-- OR go next sentence -->
                     <div class="btn-next-sen" *ngIf="currentSentence.preview && !isLastSentence(currentSentence.index)">
-                        <button class="btn btn-outline-info" (click)="sentenceSelect(currentSentence.index + 1)">
-                            Next Sentence
+                        <button class="btn btn-outline-info px-2" (click)="sentenceSelect(currentSentence.index + 1)">
+                            Następne zdanie
                         </button>
                     </div>
 
                     <!-- finish -->
                     <div class="btn-next-sen" *ngIf="currentSentence.preview && isLastSentence(currentSentence.index)">
-                        <button class="btn btn-outline-success" (click)="backToLibrary()">
+                        <button class="btn btn-outline-success px-2" (click)="backToLibrary()">
                             Finish
                         </button>
                     </div>

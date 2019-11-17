@@ -17,7 +17,7 @@ router.get('/test', function (req, res) {
 router.get('/article/all', async function (req, res) {
     return controller.getArticles()
         .then(result => res.status(200).json(result))
-        .catch(e => res.status(500).json({msg: 'Something broke', error: e}));
+        .catch(defaultErrorCtrl(res));
 });
 
 router.get('/article/:id', async function (req, res) {
@@ -25,7 +25,7 @@ router.get('/article/:id', async function (req, res) {
     
     return controller.getArticle(id)
         .then(result => res.status(200).json(result))
-        .catch(e => res.status(500).json({msg: 'Something broke', error: e}));
+        .catch(defaultErrorCtrl(res));
 });
 
 router.post('/article/new', async function (req, res) {
@@ -34,16 +34,30 @@ router.post('/article/new', async function (req, res) {
     
     return controller.createArticle(text, name)
         .then(result => res.status(200).json(result))
-        .catch(e => res.status(500).json({msg: 'Something broke', error: e}));
+        .catch(defaultErrorCtrl(res));
 });
+
+router.post('/article/:id', async function (req, res) {
+    const id = req.params.id;
+    const article = req.body.article;
+    return controller.updateArticle(id, article)
+        .then(result => res.status(200).json(result))
+        .catch(defaultErrorCtrl(res));
+});
+
+router.delete('/article/:id', async function (req, res) {
+    const id = req.params.id;
+
+    return controller.deleteArticle(id)
+        .then(result => res.status(200).json(result))
+        .catch(defaultErrorCtrl(res));
+});
+
 module.exports = router;
 
-
-// router.post('/', function (req, res) {
-//     const name = req.body.name;
-//     const UserSchema = mongoose.model('User');
-//     res.send({result: user});
-//         // }).catch(e => {
-//         //     res.status(500);
-//         // });
-// });
+function defaultErrorCtrl(res) {
+    return error => res.status(500).json({
+        msg: 'Something broke', 
+        error,
+    });
+}

@@ -4,43 +4,43 @@ const ArticelMaker = require('../helper/artice-maker');
 
 const ArticleController = {
 
-    getArticles: async () => new Promise((resolve, reject) => {
-        Article.find({}, function (err, articles) {
-            if (err) {
-                reject(err);
-            }
-            else {
-                resolve({
-                    data: articles.map(a => {
-                        a.id = a._id;
-                        delete a._id;
-                        return a;
-                    }),
-                });
-            }
-        });
-    }),
+    getArticles: async () => 
+        Article.find({}).exec().then(articles => ({
+            data: articles
+        })),
 
-    getArticle: async id => new Promise((resolve, reject) => {
-        Article.findById(id, function (err, article) {
-            if (err) {
-                reject(err);
-            }
-            else {
-                resolve({
-                    data: article || null,
-                });
-            }
-        });
-    }),
+    getArticle: async id =>
+        Article.findById(id).exec().then(article => ({
+            data: article
+        })),
 
     createArticle: async (text, name) => {
         const sentences = ArticelMaker.splitTextIntoSentences(text);
-        console.log({sentences})
-        return Article.create({ name, sentences }).then(article => ({id: article._id}));
+
+        return Article.create({ 
+            name,
+            sentences,
+            text,
+        })
+        .then(article => ({data: article}));
     },
 
-    // sync test
+    updateArticle: async (id, {text, name}) => 
+        Article.findById(id).exec().then(article => {
+            article.name = name;
+            article.text = text;
+            article.sentences = ArticelMaker.splitTextIntoSentences(text);;
+            article.save();
+            return {data: article};
+        }),
+
+    deleteArticle: async id => {
+        return Article.find({ _id: id })
+            .remove()
+            .exec()
+            .then(status => ({status}));
+    },
+
     test: function () {
         const result = [];
         const words = [

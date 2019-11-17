@@ -2,12 +2,11 @@
 
     <div class="modal-content">
         <!-- Header -->
-        <div class="modal-header bg-info">
+        <div class="modal-header">
             <h4 class="modal-title">
                 {{ title }}
             </h4>
             <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-                <!-- <span aria-hidden="true">&times;</span> -->
             </button>
         </div>
 
@@ -17,45 +16,26 @@
                     <!-- Name -->
                     <div class="row">
                         <div class="col form-group">
-                            <label for="form-client-name">Name</label>
+                            <label for="form-client-name">Nazwa Artykułu</label>
                             <input type="text" 
                                     class="form-control" 
                                     id="form-name" 
                                     autofocus
-                                    formControlName="name" 
+                                    formControlName="name"
                                     [ngClass]="{ 
                                         'is-invalid': submitted && f.name.errors 
                                     }">
                             <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                                 <div *ngIf="f.name.errors.required">
-                                    Article Name is required
+                                    Nazwa artykułu jest wymagana
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Level -->
-                    <!-- <div class="row">
-                        <div class="col form-group">
-                            <label for="form-level">Level</label>
-                            <input type="text"
-                                    class="form-control" 
-                                    id="form-level" 
-                                    autofocus
-                                    formControlName="level" 
-                                    [ngClass]="{ 
-                                        'is-invalid': submitted && f.level.errors 
-                                    }">
-                            <div *ngIf="submitted && f.level.errors" class="invalid-feedback">
-                                <div *ngIf="f.level.errors.required">
-                                    Article level is required
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <!-- Article text -->
                     <div class="row">
                         <div class="col form-group">
-                            <label for="form-client-note">Content</label>
+                            <label for="form-client-note">Treść Artykułu</label>
                             <textarea class="form-control" 
                                     id="form-text" 
                                     rows="3" 
@@ -64,7 +44,7 @@
                         </div>
                         <div *ngIf="submitted && f.text.errors" class="invalid-feedback">
                             <div *ngIf="f.text.errors.required">
-                                Article Content is required
+                                    Treść Artykułu jest wymagana
                             </div>
                         </div>
                     </div>
@@ -85,12 +65,12 @@
                     <div class="col">
                         <button type="button" class="btn btn-secondary btn-block"
                             (click)="activeModal.close('Close click')">
-                            Cancel
+                            Anulować
                         </button>
                     </div>
                     <div class="col">
                         <button type="button" class="btn btn-success btn-block" (click)="submitHandler()">
-                            Create
+                            Zapisz
                         </button>
                     </div>
                 </div>

@@ -3,14 +3,18 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
 import { PreloaderService } from '../../../services/preloader.service';
-// import { ModalService } from 'src/app/services/modal.service';
-// import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {
     faTimes,
     faAngleLeft,
-    // faWindowClose,
     IconDefinition,
+    faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
+
+interface articleInterface {
+    sentences: any[],
+    name: string,
+    level?: string
+}
 
 @Component({
     selector: 'app-article-page',
@@ -19,34 +23,23 @@ import {
 })
 export class ArticlePageComponent implements OnInit, OnDestroy {
 
-    public faAngleLeftIcon: IconDefinition;
-    // public faWindowCloseIcon: IconDefinition;
-    public faTimesIcon: IconDefinition;
+    public faAngleLeftIcon: IconDefinition = faAngleLeft;
+    public faTimesIcon: IconDefinition = faTimes;
+    public faInfoCircleIcon: IconDefinition = faInfoCircle;
     public articleId;
-    public article: {
-        sentences: any[],
-        name: String,
-    };
-    private subscribe: any;
-
-    /////////////////////
+    public article: articleInterface;
     public currentSentence: any = null;
     public answers: any = {};
-    public answer = '';
+    private subscribe: any;
+    private level: string;
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private loader: PreloaderService,
         private api: ApiService,
-        // private modalService: ModalService,
     ) {
-        this.faAngleLeftIcon = faAngleLeft;
-        this.faTimesIcon = faTimes;
-        this.article = {
-            sentences: [],
-            name: '',
-        };
+        this.level = this.route.snapshot.paramMap.get('level');
     }
 
     public ngOnInit() {
@@ -89,14 +82,17 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         } else {
             part.success = false;
         }
-        console.log({word, part, answers:this.answers, answer:this.answer});
+        console.log({word, part, answers:this.answers});
     }
 
     private getArticle(): Subscription {
         this.loader.show();
         return this.api.getArticle(this.articleId).subscribe(
             (res) => {
-                this.article = Object.assign({}, res.data);
+                this.loader.hide();
+                this.article = Object.assign({}, res.data, {
+                    level: this.level,
+                });
                 this.article.sentences.forEach(sentence => {
                     const words = sentence.parts.filter(i => i.type === 'word');
                     if (!words.length) {
@@ -119,8 +115,10 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
                 })
                 console.log({res: this.article});
             },
-            (error: any) => console.error({ error }),
-            () => this.loader.hide()
+            (error: any) => {
+                console.error({ error });
+                this.loader.hide();
+            }
         );
     }
 }

@@ -3,18 +3,11 @@
   display: block;
 }
 
-body {
-  padding-top: 40px;
-}
-
 .close {
-  // position: absolute;
-  // right: 32px;
-  // top: 32px;
   cursor: pointer;
   position: relative;
-  top: 0;
-  right: 0;
+  top: 15px;
+  right: 15px;
   width: 32px;
   height: 32px;
   opacity: 0.3;
@@ -41,4 +34,13 @@ body {
 
 .close:after {
   transform: rotate(-45deg);
+}
+
+.modal-dialog {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+.modal-title {
+  color: #6b757d;
+  letter-spacing: 2px;
 }
