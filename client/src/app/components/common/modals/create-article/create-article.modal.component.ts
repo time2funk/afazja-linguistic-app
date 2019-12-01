@@ -63,6 +63,7 @@ export class CreateArticleModalComponent implements OnInit {
             text: this.f.text.value,
         }
         if (this.config) {
+            console.log({config: this.config})
             article._id = this.config._id
             this.updateArticle(article);
         } else {
