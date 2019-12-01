@@ -45,7 +45,10 @@
                                             formControlName="level"
                                             [value]="levelType.name" >
                                     <label class="form-check-label" for="ctrl-radio-{{levelType.name}}">
-                                    {{ levelType.label }}
+                                        {{ levelType.label }}
+                                        <small class="text-secondary" *ngIf="levelType.description">
+                                            {{ levelType.description }}
+                                        </small>
                                     </label>
                                 </div>
                             </div>

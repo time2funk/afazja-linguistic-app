@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ApiService } from '../../../services/api.service';
@@ -29,7 +29,6 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     public articleId;
     public article: articleInterface;
     public currentSentence: any = null;
-    public answers: any = {};
     private subscribe: any;
     private level: string;
 
@@ -38,6 +37,7 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private loader: PreloaderService,
         private api: ApiService,
+        private cd: ChangeDetectorRef,
     ) {
         this.level = this.route.snapshot.paramMap.get('level');
     }
@@ -79,10 +79,36 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     public wordChangeHandler(word, part) {
         if (word === part.text) {
             part.success = true;
+            this.cd.detectChanges();
         } else {
             part.success = false;
         }
-        console.log({word, part, answers:this.answers});
+        console.log('right answer', part.text);
+    }
+
+    private setSentenceAskWords(words, sentence) {
+        sentence.answers = {};
+        let max;
+        switch (this.article.level) {
+            case 'hard':
+                max = words.length < 5 ? words.length : 5;
+                break;
+            case 'medium':
+                max = words.length < 3 ? words.length : 3;
+                break;
+            case 'easy':
+            default:
+                max = 1;
+        }
+        const indexes = [];
+        while (indexes.length < max) {
+            const randIndex = Math.floor(Math.random() * words.length);
+            if (!indexes.includes(randIndex)) {
+                indexes.push(randIndex);
+                words[randIndex].ask = true;
+                sentence.answers[randIndex] = null;
+            }
+        }
     }
 
     private getArticle(): Subscription {
@@ -96,26 +122,15 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
                 this.article.sentences.forEach(sentence => {
                     const words = sentence.parts.filter(i => i.type === 'word');
                     if (!words.length) {
-                        sentence.preview = true;
+                        // sentence.preview = true;
+                        sentence.noAsk = true;
                     } else {
-                        // const step = words.length / 2;
-                        let i = 1;
-                        words.forEach(word => {
-                            if (i != 3) {
-                                i++;
-                                word.ask = false;
-                                // return;
-                            } else {
-                                word.ask = true;
-                                i = 1;
-                                // return;
-                            }
-                        });
+                        this.setSentenceAskWords(words, sentence);
                     }
                 })
-                console.log({res: this.article});
             },
             (error: any) => {
+                alert(error);
                 console.error({ error });
                 this.loader.hide();
             }

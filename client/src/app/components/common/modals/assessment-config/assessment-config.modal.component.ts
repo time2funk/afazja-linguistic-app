@@ -18,6 +18,7 @@ enum LevelsEnum {
 interface levelType {
     label: string,
     name: LevelsEnum,
+    description?: string,
 }
 const DEFAULT_LEVEL = LevelsEnum.MEDIUM;
 
@@ -37,12 +38,15 @@ export class AssessmentConfigModalComponent implements OnInit {
         {
             label: 'Easy',
             name: LevelsEnum.EASY,
+            description: '( 1 słowo )',
         }, {
             label: 'Medium',
             name: LevelsEnum.MEDIUM,
+            description: '( 1 - 3 słowa )',
         }, {
             label: 'Hard',
             name: LevelsEnum.HARD,
+            description: '( 1 - 5 słów )',
         }
     ];
 

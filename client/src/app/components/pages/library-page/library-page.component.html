@@ -1,21 +1,17 @@
 <div class="library-page">
     <div class="container-fluid">
 
-        <div class="row tool-bar">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-
-                        <div class="btn-toolbar pt-4" role="toolbar">
-                            <!-- CREATE ARTICLE -->
-                            <button type="button" 
-                                    class="btn btn-success px-5"
-                                    (click)="openCreateArticleModal()">
-                                <fa-icon [icon]="faPlusIcon"></fa-icon>
-                                Utwórz artykuł
-                            </button>
-                        </div>
-
+        <div class="row">
+            <div class="col-12">
+                <div class="tool-bar">
+                    <div class="btn-toolbar pt-4" role="toolbar">
+                        <!-- CREATE ARTICLE -->
+                        <button type="button" 
+                                class="btn btn-success px-5"
+                                (click)="openCreateArticleModal()">
+                            <fa-icon [icon]="faPlusIcon"></fa-icon>
+                            Utwórz artykuł
+                        </button>
                     </div>
                 </div>
             </div>
@@ -24,41 +20,35 @@
         <hr>
         
         <div class="row body">
-            <div class="container">
-                <div class="row">
-
-                    <div *ngFor="let article of articleList; let i = index;"
-                            class="col-sm-2 col-md-3 col-lg-4">
-                        <div class="article-block mt-4" (click)="openAssessmentConfigModal(article, $event)">
-                            <div class="tools">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button"
-                                            data-toggle="dropdown" 
-                                            aria-haspopup="true" 
-                                            aria-expanded="false">
-                                        <fa-icon [icon]="faBarsIcon"></fa-icon>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" (click)="openEditArticleModal(article)">
-                                            <fa-icon [icon]="faEditIcon"></fa-icon>
-                                            Edytować 
-                                        </a>
-                                        <a class="dropdown-item" (click)="deleteArticle(article)">
-                                            <fa-icon [icon]="faTrashIcon"></fa-icon>
-                                            Usunąć
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pic">
-                                <img src="../../../../assets/book.svg" width="50" alt="Article">
-                            </div>
-                            <div class="name">
-                                {{ article.name }}
+            <div *ngFor="let article of articleList; let i = index;"
+                    class="col-sm-6 col-md-4 col-lg-3">
+                <div class="article-block mt-4" (click)="openAssessmentConfigModal(article, $event)">
+                    <div class="tools">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle" type="button"
+                                    data-toggle="dropdown" 
+                                    aria-haspopup="true" 
+                                    aria-expanded="false">
+                                <fa-icon [icon]="faBarsIcon"></fa-icon>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="openEditArticleModal(article)">
+                                    <fa-icon [icon]="faEditIcon"></fa-icon>
+                                    Edytować 
+                                </a>
+                                <a class="dropdown-item" (click)="deleteArticle(article)">
+                                    <fa-icon [icon]="faTrashIcon"></fa-icon>
+                                    Usunąć
+                                </a>
                             </div>
                         </div>
                     </div>
-                    
+                    <div class="pic">
+                        <img src="../../../../assets/book.svg" width="50" alt="Article">
+                    </div>
+                    <div class="name">
+                        {{ article.name }}
+                    </div>
                 </div>
             </div>
         </div>

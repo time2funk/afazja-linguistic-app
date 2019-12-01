@@ -34,7 +34,6 @@ export class CreateArticleModalComponent implements OnInit {
 
     public ngOnInit(): void {
         this.initForm();
-        console.log({config: this.config})
         if (this.config) {
             const { name, text } = this.config;
             if (name) {
@@ -59,12 +58,12 @@ export class CreateArticleModalComponent implements OnInit {
         this.submitted = true;
         if (this.formGroup.invalid) return;
 
-        const article = {
-            _id: this.config._id,
+        const article: any = {
             name: this.f.name.value,
             text: this.f.text.value,
         }
         if (this.config) {
+            article._id = this.config._id
             this.updateArticle(article);
         } else {
             this.createArticle(article);
@@ -89,7 +88,7 @@ export class CreateArticleModalComponent implements OnInit {
             );
     }
 
-    private updateArticle(article): void { // TODO
+    private updateArticle(article): void {
         this.loader.show();
         this.api.updateArticle(article)
             .subscribe(
@@ -97,7 +96,7 @@ export class CreateArticleModalComponent implements OnInit {
                     this.loader.hide();
                     this.activeModal.close(Object.assign({}, {
                         success: true,
-                        article: data, // TODO
+                        article: data,
                     }));
                 },
                 error => {
