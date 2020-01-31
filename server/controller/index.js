@@ -1,6 +1,8 @@
+const _ = require('lodash');
 const mongoose = require("mongoose");
 const Article = mongoose.model('Article');
 const ArticelMaker = require('../helper/artice-maker');
+const { findImages } = require('../helper/index');
 
 const ArticleController = {
 
@@ -10,14 +12,31 @@ const ArticleController = {
         })),
 
     getArticle: async id =>
-        Article.findById(id).exec().then(article => ({
-            data: article
-        })),
+        Article.findById(id).exec()
+            .then(async data => {
+                const article = data.toObject();
+                if (article && article.sentences.length) {
+                    for (const sentence of article.sentences) {
+                        for (const part of sentence.parts) {
+                            if (part.type === 'word') {
+                                try {
+                                    part.images = await findImages(part.text);
+                                } catch (error) {
+                                    part.images = [1,2].map(i => ({
+                                        url: 'https://media.gettyimages.com/photos/cropped-image-of-person-eye-picture-id942369796?s=612x612',
+                                    }));
+                                }
+                            };
+                        }
+                    }
+                }
+                return { data: article };
+            }),
 
     createArticle: async (text, name) => {
         const sentences = ArticelMaker.splitTextIntoSentences(text);
 
-        return Article.create({ 
+        return Article.create({
             name,
             sentences,
             text,

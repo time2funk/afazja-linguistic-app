@@ -56,8 +56,8 @@ class NLP {
 		this.indexValues = []; 
 		this.indexKeys = [];
 
-		for(var i=0; i<256; i++)
-		this.byteToChar.push(String.fromCharCode(i));
+		for (var i=0; i<256; i++)
+			this.byteToChar.push(String.fromCharCode(i));
 		
 		this.byteToChar['1'.charCodeAt(0)] = 'ą';
 		this.byteToChar['-'.charCodeAt(0)] = '-';
@@ -247,7 +247,7 @@ class NLP {
 		
 		for (var i=0; i<n; i++) {
 			let lexem = new Lexem(this.indexValues[start+i], l.neg, this);
-			if(lexem.neg == l.neg)
+			if (lexem.neg == l.neg)
 				o.push(lexem);
 		}
 		return o;

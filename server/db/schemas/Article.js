@@ -25,10 +25,9 @@ const ArticleSchema = new mongoose.Schema({
             },
             text: {
                 type: String,
-                // required: true,
             },
             type: {
-                type: String, // text | word
+                type: String,
                 required: true,
             },
             wordType: {

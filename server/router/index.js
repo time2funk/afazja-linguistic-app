@@ -3,12 +3,6 @@ const router = express.Router();
 
 const controller = require('../controller');
 
-// middleware
-router.get('/', function (req, res, next) {
-    console.log({req});
-    next();
-});
-
 router.get('/test', function (req, res) {
     const result = controller.test();
     res.status(200).json({ data: result });
