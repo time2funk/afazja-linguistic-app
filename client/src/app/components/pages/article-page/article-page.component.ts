@@ -94,9 +94,12 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         this.currentSentence = null;
         this.focusWord = null;
         this.article.sentences.forEach(sentence => {
-            for (let [key, value] of Object.entries(sentence.answers)) {
-                sentence.answers[key] = null;
+            if (sentence.answers) {
+                for (let [key, value] of Object.entries(sentence.answers)) {
+                    sentence.answers[key] = null;
+                }
             }
+            delete sentence.noAsk;
             delete sentence.preview;
             sentence.parts.forEach(part => {
                 delete part.ask;
