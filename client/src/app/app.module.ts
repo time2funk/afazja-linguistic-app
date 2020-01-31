@@ -10,22 +10,22 @@ import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { LibraryPageComponent } from './components/pages/library-page/library-page.component';
 import { ArticlePageComponent } from './components/pages/article-page/article-page.component';
-import { PictureTooltipComponent } from './components/common/tooltips/picture.tooltip/picture.tooltip.component';
-import { DescriptionTooltipComponent } from './components/common/tooltips/description.tooltip/description.tooltip.component';
 import { CreateArticleModalComponent } from './components/common/modals/create-article/create-article.modal.component';
 import { PreloaderComponent } from './components/common/preloader/preloader.component';
-import { AssessmentConfigModalComponent } from './components/common/modals/assessment-config/assessment-config.modal.component';
+import { AssignmentConfigModalComponent } from './components/common/modals/assignment-config/assignment-config.modal.component';
+import { CarouselComponent } from './components/common/carousel/carousel.component';
+import { FinishAssignmentComponent } from './components/common/modals/finish-assignment/finish-assignment.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         LibraryPageComponent,
         ArticlePageComponent,
-        PictureTooltipComponent,
-        DescriptionTooltipComponent,
         CreateArticleModalComponent,
         PreloaderComponent,
-        AssessmentConfigModalComponent,
+        AssignmentConfigModalComponent,
+        CarouselComponent,
+        FinishAssignmentComponent,
     ],
     imports: [
         NgbModule,
@@ -40,7 +40,8 @@ import { AssessmentConfigModalComponent } from './components/common/modals/asses
     bootstrap: [AppComponent],
     entryComponents: [
         CreateArticleModalComponent,
-        AssessmentConfigModalComponent,
+        AssignmentConfigModalComponent,
+        FinishAssignmentComponent,
     ],
 })
 export class AppModule { };

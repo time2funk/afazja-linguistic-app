@@ -80,7 +80,6 @@ export class LibraryPageComponent implements OnInit, OnDestroy {
                 // on Close Event 
             }
         );
-
     }
 
     public openCreateArticleModal() {
@@ -97,12 +96,12 @@ export class LibraryPageComponent implements OnInit, OnDestroy {
         );
     }
 
-    public openAssessmentConfigModal(article, event) {
+    public openAssignmentConfigModal(article, event) {
         if (event.target.closest('.dropdown')) {
             return;
         }
         
-        const currentModalRef: NgbModalRef = this.modalService.openAssessmentConfigModal(article);
+        const currentModalRef: NgbModalRef = this.modalService.openAssignmentConfigModal(article);
         currentModalRef.result.then(
             responce => {
                 if (responce.success) {

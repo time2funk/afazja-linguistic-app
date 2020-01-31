@@ -5,23 +5,8 @@
   }
 }
 
-// .a-btn-close {
-//     font-size: 35px;
-//     cursor: pointer;
-
-//     fa-icon {
-//         color: #e60000;
-//     }
-//     &:hover {
-//         fa-icon {
-//             color: red;
-//         }
-//     }
-// }
-
 .article-header {
   min-height: 70px;
-  // background: lightblue;
   border-bottom: 1px solid cadetblue;
 
   .title {
@@ -33,20 +18,12 @@
       line-height: 1.5;
     }
   }
-  // .title,
-  // .left-btn-action,
-  // .right-btn-action {
-  //     float: left;
-  // }
+  
   .left-btn-action,
   .right-btn-action {
     width: 50px;
     height: 100%;
   }
-  // .left-btn-action button {
-  //     width: 100%;
-  //     height: 100%;
-  // }
 
   .left-btn-action {
     font-size: 40px;
@@ -71,15 +48,16 @@
 .sentence-text {
   padding: 20px;
   font-size: 2em;
-  // border-top: 1px solid seagreen;
-  // border-bottom: 1px solid seagreen;
 
   & > div {
     display: inline-block;
   }
 }
 
-.sentence-list {
+ol.sentence-list {
+  width: 100%;
+  padding: 0;
+  list-style: none;
   span {
     font-size: 25px;
   }
@@ -97,13 +75,22 @@ a {
   input {
     border-radius: 12px;
     border: 2px solid cadetblue;
+    &:focus {
+      border-color: orange !important;
+      outline: none;
+    }
   }
   &.all-good {
     input {
-      border-color: #02b370;
+      border-color: #02b370 !important;
     }
   }
   &.error {
+    input {
+      border-color: #b3afa8;
+    }
+  }
+  &.selected {
     input {
       border-color: orange;
     }

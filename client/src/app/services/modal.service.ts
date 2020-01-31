@@ -4,7 +4,8 @@ import {
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { CreateArticleModalComponent } from '../components/common/modals/create-article/create-article.modal.component';
-import { AssessmentConfigModalComponent } from '../components/common/modals/assessment-config/assessment-config.modal.component';
+import { AssignmentConfigModalComponent } from '../components/common/modals/assignment-config/assignment-config.modal.component';
+import { FinishAssignmentComponent } from '../components/common/modals/finish-assignment/finish-assignment.component';
 
 
 const defaultConfig: any = {
@@ -27,9 +28,15 @@ export class ModalService {
         return ref;
     }
 
-    public openAssessmentConfigModal(article): NgbModalRef {
-        const ref = this.modalService.open(AssessmentConfigModalComponent, defaultConfig);
+    public openAssignmentConfigModal(article): NgbModalRef {
+        const ref = this.modalService.open(AssignmentConfigModalComponent, defaultConfig);
         ref.componentInstance.config = article;
+        return ref;
+    }
+
+    public openAssignmentFinishModal(data): NgbModalRef {
+        const ref = this.modalService.open(FinishAssignmentComponent, defaultConfig);
+        ref.componentInstance.config = data;
         return ref;
     }
 }

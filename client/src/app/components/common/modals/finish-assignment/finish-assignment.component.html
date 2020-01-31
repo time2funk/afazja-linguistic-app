@@ -1,0 +1,68 @@
+<div role="document" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container-fluid">
+                <!-- Star Icon -->
+                <div class="row mt-3 mb-5">
+                    <div class="col-md-12 text-center">
+                        <img src="assets/images/star.png" class="star-icon">
+                    </div>
+                </div>
+                <!-- Title -->
+                <h4 class="modal-title text-center">FINISH ZADANIA</h4>
+                <hr class="mb-5">
+                <!-- Name -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label>Nazwa</label>
+                        <div class="info-text">
+                            {{ config.name }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Size -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label>Rozmiar</label>
+                        <div class="info-text">
+                            {{ 
+                                config.sentences.length === 1 
+                                    ? 'Jedno zdanie'
+                                    : config.sentences.length + ' zdań'
+                            }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Result -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label>Wyniki</label>
+                        <div class="info-text">
+                            {{ countResults() }}
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-5">
+                <!-- Footer Buttons -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" 
+                                    class="btn btn-outline-secondary btn-block"
+                                    (click)="restart()">
+                                Restart
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="button" 
+                                    class="btn btn-success btn-block" 
+                                    (click)="close()">
+                                Galereja
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

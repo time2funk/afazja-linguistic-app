@@ -20,15 +20,15 @@ interface levelType {
     name: LevelsEnum,
     description?: string,
 }
-const DEFAULT_LEVEL = LevelsEnum.MEDIUM;
+const DEFAULT_LEVEL = LevelsEnum.EASY;
 
 
 @Component({
-    selector: 'app-assessment-config',
-    templateUrl: './assessment-config.modal.component.html',
-    styleUrls: ['./assessment-config.modal.component.scss']
+    selector: 'app-assignment-config',
+    templateUrl: './assignment-config.modal.component.html',
+    styleUrls: ['./assignment-config.modal.component.scss']
 })
-export class AssessmentConfigModalComponent implements OnInit {
+export class AssignmentConfigModalComponent implements OnInit {
     @Input() config: any = {};
     public formGroup: FormGroup;
     public submitted: boolean = false;

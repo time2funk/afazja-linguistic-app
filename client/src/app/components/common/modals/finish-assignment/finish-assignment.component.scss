@@ -1,0 +1,13 @@
+.info-text {
+  padding-left: 20px;
+  color: #437375;
+  font-size: 1.1em;
+}
+.form-group {
+  & > label {
+    font-weight: bold;
+  }
+}
+img.star-icon {
+  max-width: 50px;
+}

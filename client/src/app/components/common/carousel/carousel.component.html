@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <ngb-carousel
+                    *ngIf="wordObject"
+                    [interval]="0"
+                    [showNavigationArrows]="showNavigationArrows" 
+                    [showNavigationIndicators]="showNavigationIndicators">
+                <ng-template ngbSlide *ngFor="let image of wordObject.images">
+                    <img class="carousel-img" [src]="image.url">
+                </ng-template>
+            </ngb-carousel>
+            <div class="no-picture-holder" *ngIf="!wordObject">
+                <img src="assets/images/no-picture.jpg">
+            </div>
+        </div>
+    </div>
+</div>

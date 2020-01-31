@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../../../services/api.service';
 import { PreloaderService } from '../../../services/preloader.service';
+import { ModalService } from 'src/app/services/modal.service';
 import {
     faTimes,
     faAngleLeft,
@@ -26,18 +28,20 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     public faAngleLeftIcon: IconDefinition = faAngleLeft;
     public faTimesIcon: IconDefinition = faTimes;
     public faInfoCircleIcon: IconDefinition = faInfoCircle;
-    public articleId;
     public article: articleInterface;
     public currentSentence: any = null;
-    private subscribe: any;
+    public focusWord: any = null;
+    private articleId: string;
     private level: string;
+    private subscribe: any;
 
     constructor(
-        private router: Router,
+        private router: Router, // ?
         private route: ActivatedRoute,
         private loader: PreloaderService,
         private api: ApiService,
         private cd: ChangeDetectorRef,
+        private modalService: ModalService,
     ) {
         this.level = this.route.snapshot.paramMap.get('level');
     }
@@ -54,15 +58,62 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         }
     }
 
+    public wordOnFocus(part) {
+        this.focusWord = part;
+    }
+
+    public wordFocusOut() {
+        this.focusWord = null
+    }
+
     public backToLibrary() {
         this.router.navigate([`/library`]);
     }
 
+    public showFinishWindow() {
+        const currentModalRef: NgbModalRef = this.modalService.openAssignmentFinishModal(this.article);
+        currentModalRef.result.then(
+            responce => {
+                if (responce && responce.action) {
+                    if (responce.action === 'close') {
+                        this.backToLibrary();
+                    } else {
+                        this.refreshAssignment();
+                    }
+                }
+            },
+            reason => {
+                // on Close Event 
+            }
+        );
+    }
+
+    public refreshAssignment() {
+        console.log({ article: this.article });
+        this.loader.show();
+        this.currentSentence = null;
+        this.focusWord = null;
+        this.article.sentences.forEach(sentence => {
+            for (let [key, value] of Object.entries(sentence.answers)) {
+                sentence.answers[key] = null;
+            }
+            delete sentence.preview;
+            sentence.parts.forEach(part => {
+                delete part.ask;
+                delete part.success;
+            });
+        });
+        this.manageSentence();
+        this.loader.hide();
+    }
+
     public backToSentences() {
         this.currentSentence = null;
+        this.focusWord = null;
     }
 
     public doAssignment() {
+        this.focusWord = null;
         if (this.currentSentence) {
             this.currentSentence.preview = true;
         }
@@ -116,24 +167,28 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         return this.api.getArticle(this.articleId).subscribe(
             (res) => {
                 this.loader.hide();
+                console.log({ res })
                 this.article = Object.assign({}, res.data, {
                     level: this.level,
                 });
-                this.article.sentences.forEach(sentence => {
-                    const words = sentence.parts.filter(i => i.type === 'word');
-                    if (!words.length) {
-                        // sentence.preview = true;
-                        sentence.noAsk = true;
-                    } else {
-                        this.setSentenceAskWords(words, sentence);
-                    }
-                })
+                this.manageSentence();
             },
             (error: any) => {
-                alert(error);
                 console.error({ error });
                 this.loader.hide();
             }
         );
+    }
+
+    private manageSentence(): void {
+        this.article.sentences.forEach(sentence => {
+            const words = sentence.parts.filter(i => i.type === 'word');
+            if (!words.length) {
+                // sentence.preview = true;
+                sentence.noAsk = true;
+            } else {
+                this.setSentenceAskWords(words, sentence);
+            }
+        });
     }
 }

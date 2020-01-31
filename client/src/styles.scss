@@ -44,3 +44,17 @@
   color: #6b757d;
   letter-spacing: 2px;
 }
+
+hr {
+  border-top: 1px solid rgb(95, 158, 160) !important;
+}
+
+a.carousel-control-next,
+a.carousel-control-prev {
+  background: black;
+  cursor: pointer;
+}
+.carousel-item,
+.carousel-inner {
+  outline: none;
+}
