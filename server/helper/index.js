@@ -1,8 +1,10 @@
 const fs = require('fs');
 const lzma = require("lzma");
+
 const config = require('../config/index');
-const imageSearch = require('image-search-google');
-const imageSearchClient = new imageSearch(config.customSearch.cseId, config.customSearch.apiKey);
+const ImageSearch = require('./image-search-google');
+
+const imageSearchClient = new ImageSearch(config.customSearch.cseId, config.customSearch.apiKey);
 
 const toArrayBuffer = function (buf) {
     const ab = new ArrayBuffer(buf.length);
@@ -40,6 +42,6 @@ module.exports.lzmaDecompress = lzmaDecompress;
 
 
 const findImages = async function (term) {
-    return imageSearchClient.search(term, {size: 'small', num: 3});
+    return imageSearchClient.search(term, {size: 'small', num: 3, gl: 'pl', lr: 'lang_pl', imgType: 'clipart', fileType: 'png'});
 };
 module.exports.findImages = findImages;
