@@ -6,7 +6,7 @@ module.exports = {
         uri: 'mongodb://localhost:27017/afazja-app',
     },
     customSearch: {
-        apiKey: process.env.apiKey,
-        cseId: process.env.cseId,
+        apiKey: process.env.GOOGLE_API_KEY,
+        cseId: process.env.GOOGLE_CSE_ID,
     },
 }

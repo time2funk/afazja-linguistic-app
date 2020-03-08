@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const http = require('http')
 const path = require('path');
+require('dotenv').config();
 
 const config = require('./config');
 const db = require('./db');
