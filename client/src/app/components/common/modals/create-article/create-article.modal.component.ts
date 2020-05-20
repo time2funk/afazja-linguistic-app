@@ -42,6 +42,9 @@ export class CreateArticleModalComponent implements OnInit {
             if (text) {
                 this.f.text.setValue(text);
             }
+            this.title = 'Edytuj artykuł'
+        } else {
+            this.title = 'Utwórz artykuł'
         }
     }
 
