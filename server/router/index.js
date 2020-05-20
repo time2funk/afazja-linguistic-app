@@ -16,8 +16,14 @@ router.get('/article/all', async function (req, res) {
 
 router.get('/article/:id', async function (req, res) {
     const id = req.params.id;
-    
-    return controller.getArticle(id)
+    const { imagesFeature, imagesLength } = req.query;
+    const option = {
+        imagesFeature: imagesFeature === 'true',
+    };
+    if (option.imagesFeature) {
+        option.imagesLength = Number.parseInt(imagesLength, 10);
+    }
+    return controller.getArticle(id, option)
         .then(result => res.status(200).json(result))
         .catch(defaultErrorCtrl(res));
 });

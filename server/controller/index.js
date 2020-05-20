@@ -11,7 +11,7 @@ const ArticleController = {
             data: articles
         })),
 
-    getArticle: async id =>
+    getArticle: async (id, options) =>
         Article.findById(id).exec()
             .then(async data => {
                 const article = data.toObject();
@@ -19,12 +19,14 @@ const ArticleController = {
                     for (const sentence of article.sentences) {
                         for (const part of sentence.parts) {
                             if (part.type === 'word') {
-                                try {
-                                    part.images = await findImages(part.text);
-                                } catch (error) {
-                                    part.images = [1,2].map(i => ({
-                                        url: 'https://media.gettyimages.com/photos/cropped-image-of-person-eye-picture-id942369796?s=612x612',
-                                    }));
+                                if (options.imagesFeature) {
+                                    try {
+                                        part.images = await findImages(part.text, options.imagesLength);
+                                    } catch (error) {
+                                        part.images = [{
+                                            url: 'https://media.gettyimages.com/photos/cropped-image-of-person-eye-picture-id942369796?s=612x612',
+                                        }];
+                                    }
                                 }
                             };
                         }

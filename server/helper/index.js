@@ -41,7 +41,7 @@ const lzmaDecompress = async function (buffer) {
 module.exports.lzmaDecompress = lzmaDecompress;
 
 
-const findImages = async function (term) {
-    return imageSearchClient.search(term, {size: 'small', num: 3, gl: 'pl', lr: 'lang_pl', imgType: 'clipart', fileType: 'png'});
+const findImages = async function (term, length = 3) {
+    return imageSearchClient.search(term, {size: 'small', num: length, gl: 'pl', lr: 'lang_pl', imgType: 'clipart', fileType: 'png'});
 };
 module.exports.findImages = findImages;
