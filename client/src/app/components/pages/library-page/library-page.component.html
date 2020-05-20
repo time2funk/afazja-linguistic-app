@@ -1,27 +1,75 @@
 <div class="library-page">
-    <div class="container-fluid">
+    <div class="container">
 
         <div class="row">
             <div class="col-12">
                 <div class="tool-bar">
                     <div class="btn-toolbar pt-4" role="toolbar">
-                        <!-- CREATE ARTICLE -->
-                        <button type="button" 
-                                class="btn btn-success px-5"
-                                (click)="openCreateArticleModal()">
-                            <fa-icon [icon]="faPlusIcon"></fa-icon>
-                            Utwórz artykuł
+                        <button 
+                            type="button" 
+                            class="btn btn-light"
+                            (click)="toggleFontSize()"
+                        >
+                            <i class="fas"
+                                [ngClass]="{
+                                    'fa-search-plus': fontSizeIncreased,
+                                    'fa-search-minus': !fontSizeIncreased
+                                }"
+                            ></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- TODO: SEARCH -->
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group mb-3 search-field">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Szukaj" 
+                        aria-label="Szukaj"
+                        [(ngModel)]="searchInput"
+                    >
+                    <div class="input-group-prepend">
+                        <button 
+                            type="button" 
+                            class="btn search-clear-btn"
+                            [ngClass]="{
+                               'btn-danger': searchInput,
+                               'btn-outline-secondary': !searchInput
+                            }" 
+                            [attr.disabled]="!searchInput ? '' : null"
+                            (click)="clearSearchInput()"
+                        >
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
         
-        <hr>
-        
         <div class="row body">
-            <div *ngFor="let article of articleList; let i = index;"
-                    class="col-sm-6 col-md-4 col-lg-3">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="article-block mt-4" (click)="openCreateArticleModal()">
+                    <div class="pic">
+                        <i class="far fa-file" width="50" ></i>
+                    </div>
+                    <div class="name">
+                        Utwórz artykuł
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let article of filterArticles(articleList); let i = index;"
+                 class="col-sm-6 col-md-4 col-lg-3"
+            >
                 <div class="article-block mt-4" (click)="openAssignmentConfigModal(article, $event)">
                     <div class="tools">
                         <div class="dropdown">
@@ -34,17 +82,17 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" (click)="openEditArticleModal(article)">
                                     <fa-icon [icon]="faEditIcon"></fa-icon>
-                                    Edytować 
+                                    Edytuj 
                                 </a>
                                 <a class="dropdown-item" (click)="deleteArticle(article)">
                                     <fa-icon [icon]="faTrashIcon"></fa-icon>
-                                    Usunąć
+                                    Usuń
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="pic">
-                        <img src="../../../../assets/book.svg" width="50" alt="Article">
+                        <i class="fas fa-book" width="50" ></i>
                     </div>
                     <div class="name">
                         {{ article.name }}

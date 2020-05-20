@@ -5,9 +5,24 @@
 }
 
 .btn-toolbar button {
-  margin: 0 auto;
+  // margin: 0 auto;
   letter-spacing: 2px;
   font-size: 1.2em;
+}
+
+.search-field {
+  button.search-clear-btn.btn-outline-secondary {
+    color: #ced4da;
+    border: 1px solid #ced4da;
+    border-left: 0;
+    background: white;
+  }
+  span.input-group-text {
+    background: white;
+    color: cadetblue;
+    font-size: 18px;
+    border-right: 0;
+  }
 }
 
 .dropdown {
@@ -40,6 +55,8 @@
 .article-block {
   text-align: center;
   border: 1px solid aliceblue;
+  background: white;
+  outline: 1px solid #b9b9b9;
   padding: 10px;
   cursor: pointer;
   position: relative;
@@ -54,19 +71,29 @@
   &:hover .tools {
     display: block;
   }
+  .pic {
+    padding: 10px;
+  }
+  .name {
+    padding: 10px;
+    border-top: 1px solid gainsboro;
+  }
   .tools {
     position: absolute;
     right: 5px;
     top: 5px;
     display: none;
 
-    &:hover {
-        button {
-            color: black
-        }
-    }
     button {
         color: gray
     }
+    &:hover {
+      button {
+          color: black;
+          background: rgba(22, 166, 189, 0.22);
+          transition: .3s;
+        }
+      }
+
   }
 }

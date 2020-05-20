@@ -23,12 +23,14 @@ import { ModalService } from 'src/app/services/modal.service';
 })
 export class LibraryPageComponent implements OnInit, OnDestroy {
 
+    public searchInput: string = '';
     public faPlusIcon: IconDefinition = faPlus;
     public faBarsIcon: IconDefinition = faBars;
     public faTrashIcon: IconDefinition = faTrashAlt;
     public faEditIcon: IconDefinition = faEdit;
     private subscribes: Subscription[] = [];
     public articleList: any[];
+    private fontSizeIncreased: boolean = false;
 
     constructor(
         private router: Router,
@@ -45,6 +47,25 @@ export class LibraryPageComponent implements OnInit, OnDestroy {
         if (this.subscribes.length) {
             this.subscribes.forEach(s => s.unsubscribe());
         }
+    }
+
+    public toggleFontSize() {
+        this.fontSizeIncreased = !this.fontSizeIncreased;
+    }
+
+    public clearSearchInput() {
+        this.searchInput = '';
+    }
+
+    public filterArticles(articles) {
+        if (this.searchInput) {
+            return articles.filter(
+                article => article.name.toLowerCase().match(
+                    new RegExp(this.searchInput.toLowerCase())
+                )
+            );
+        }
+        return articles;
     }
 
     public deleteArticle(article) {
