@@ -127,7 +127,15 @@ export class LibraryPageComponent implements OnInit, OnDestroy {
             responce => {
                 if (responce.success) {
                     console.log({ responce })
-                    this.router.navigate(['/article', article._id, { level: responce.config.level }]);
+                    const { level, imagesFeature, imagesLength } = responce.config;
+                    const options: any = {
+                        level,
+                        imagesFeature,
+                    }
+                    if (imagesFeature) {
+                        options.imagesLength = imagesLength;
+                    }
+                    this.router.navigate(['/article', article._id, options]);
                 }
             },
             reason => {

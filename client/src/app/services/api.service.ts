@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -17,8 +17,8 @@ export class ApiService {
         return this.http.get<any[any]>(`${this.url}/article/all`);
     }
 
-    public getArticle(id: string): Observable<any> {
-        return this.http.get<any>(`${this.url}/article/${id}`);
+    public getArticle(id: string, options: any = {}): Observable<any> {
+        return this.http.get<any>(`${this.url}/article/${id}`, { params: options });
     }
 
     public createArticle(options: {name: string, /*level: string,*/ text: string}): Observable<any> {

@@ -34,6 +34,8 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     private articleId: string;
     private level: string;
     private subscribe: any;
+    private imagesFeature: string | boolean;
+    private imagesLength: string | number;
 
     constructor(
         private router: Router, // ?
@@ -44,6 +46,12 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         private modalService: ModalService,
     ) {
         this.level = this.route.snapshot.paramMap.get('level');
+        this.imagesFeature = this.route.snapshot.paramMap.get('imagesFeature') === 'true';
+        if (this.imagesFeature) {
+            this.imagesLength = Number.parseInt(
+                this.route.snapshot.paramMap.get('imagesLength'), 10
+            );
+        }
     }
 
     public ngOnInit() {
@@ -167,7 +175,13 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
 
     private getArticle(): Subscription {
         this.loader.show();
-        return this.api.getArticle(this.articleId).subscribe(
+        const options: any = {
+            imagesFeature: this.imagesFeature,
+        };
+        if (this.imagesFeature) {
+            options.imagesLength = this.imagesLength;
+        }
+        return this.api.getArticle(this.articleId, options).subscribe(
             (res) => {
                 this.loader.hide();
                 console.log({ res })

@@ -13,6 +13,14 @@
         <div class="modal-body">
             <form [formGroup]="formGroup">
                 <div class="container-fluid">
+                    <!-- Icon -->
+                    <div class="row mt-3 mb-5">
+                        <div class="col-md-12 text-center">
+                            <i class="fas fa-book-open"
+                                style="font-size: 60px;"
+                            ></i>
+                        </div>
+                    </div>
                     <!-- Name -->
                     <div class="row">
                         <div class="col form-group">
@@ -40,10 +48,12 @@
                             <label for="form-client-name">Wybierz poziom trudności</label>
                             <div class="radio-group">                            
                                 <div class="form-check" *ngFor="let levelType of levelTypes">
-                                    <input class="form-check-input" type="radio"
-                                            id="ctrl-radio-{{levelType.name}}" 
-                                            formControlName="level"
-                                            [value]="levelType.name" >
+                                    <input
+                                        type="radio"
+                                        id="ctrl-radio-{{levelType.name}}" 
+                                        class="form-check-input" 
+                                        formControlName="level"
+                                        [value]="levelType.name" />
                                     <label class="form-check-label" for="ctrl-radio-{{levelType.name}}">
                                         {{ levelType.label }}
                                         <small class="text-secondary" *ngIf="levelType.description">
@@ -51,6 +61,36 @@
                                         </small>
                                     </label>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- images Feature -->
+                    <div class="row">
+                        <div class="col form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input 
+                                    type="checkbox" 
+                                    class="custom-control-input" 
+                                    id="imagesFeature" 
+                                    formControlName="imagesFeature">
+                                <label class="custom-control-label cursor-pointer" for="imagesFeature">
+                                    Włączyć obrazki pomocnicze
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- images Length -->
+                    <div *ngIf="formGroup.controls.imagesFeature.value">
+                        <div class="row">
+                            <div class="col form-group">
+                                <select 
+                                    class="form-control selectpicker" 
+                                    formControlName="imagesLength"
+                                >
+                                    <option *ngFor="let imagesLengthOption of imagesLengthOptions" [value]="imagesLengthOption.value">
+                                        {{ imagesLengthOption.label }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>

@@ -60,8 +60,10 @@
                                 Uzupełnij brakujące słowa
                             </div>
                             <hr>
-                            <app-carousel [wordObject]="focusWord"></app-carousel>
-                            <hr>
+                            <div *ngIf="imagesFeature">
+                                <app-carousel [wordObject]="focusWord"></app-carousel>
+                                <hr>
+                            </div>
                             <div class="sentence-text">
                                 <span *ngFor="let part of currentSentence.parts">
                                     <span *ngIf="part.type === 'text' || part.type === 'word' && !part.ask">

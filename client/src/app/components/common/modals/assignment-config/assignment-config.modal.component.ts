@@ -6,7 +6,8 @@ import {
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
     FormGroup,
-    FormBuilder
+    FormBuilder,
+    Validators
 } from '@angular/forms';
 
 
@@ -20,8 +21,12 @@ interface levelType {
     name: LevelsEnum,
     description?: string,
 }
+interface imagesLengthOption {
+    label: string;
+    value: string | number;
+}
 const DEFAULT_LEVEL = LevelsEnum.EASY;
-
+const DEFAULT_IMAGES_LENGTH_VALUE = 3;
 
 @Component({
     selector: 'app-assignment-config',
@@ -36,18 +41,32 @@ export class AssignmentConfigModalComponent implements OnInit {
     public title: string = 'Konfiguracja zadania';
     public levelTypes: levelType[] = [
         {
-            label: 'Easy',
+            label: 'Łatwy',
             name: LevelsEnum.EASY,
             description: '( 1 słowo )',
         }, {
-            label: 'Medium',
+            label: 'Średni',
             name: LevelsEnum.MEDIUM,
             description: '( 1 - 3 słowa )',
         }, {
-            label: 'Hard',
+            label: 'Trudny',
             name: LevelsEnum.HARD,
             description: '( 1 - 5 słów )',
         }
+    ];
+    public imagesLengthOptions: imagesLengthOption[] = [
+        {
+            label: "2 obrazka",
+            value: 2
+        },
+        {
+            label: "3 obrazka",
+            value: 3
+        },
+        {
+            label: "4 obrazka",
+            value: 4
+        },
     ];
 
     constructor(
@@ -63,14 +82,32 @@ export class AssignmentConfigModalComponent implements OnInit {
 
     private initForm(): void {
         this.formGroup = this.formBuilder.group({
-            level: [DEFAULT_LEVEL],
+            level: [DEFAULT_LEVEL, Validators.required],
+            imagesFeature: [false, Validators.required],
+        });
+
+        this.formGroup.controls.imagesFeature.valueChanges.subscribe(value => {
+            if (value) {
+                this.formGroup.addControl(
+                    'imagesLength',
+                    this.formBuilder.control(DEFAULT_IMAGES_LENGTH_VALUE, Validators.required)
+                );
+            } else {
+                this.formGroup.removeControl('imagesLength');
+            }
         });
     }
 
+
     public submitHandler() {
+        const imagesFeature = this.f.imagesFeature.value;
         const config = Object.assign({}, this.config, {
-            level: this.f.level.value
+            level: this.f.level.value,
+            imagesFeature: imagesFeature,
         });
+        if (imagesFeature) {
+            config.imagesLength = this.f.imagesLength.value;
+        }
         this.activeModal.close({
             config,
             success: true,
