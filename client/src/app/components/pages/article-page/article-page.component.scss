@@ -1,3 +1,8 @@
+.article-page {
+  background: white;
+  height: 100vh;
+}
+
 .tool-bar {
   border-bottom: 1px solid;
   & > div {
@@ -7,7 +12,8 @@
 
 .article-header {
   min-height: 70px;
-  border-bottom: 1px solid cadetblue;
+  background: #f6f6f6;
+  border-bottom: 1px solid #b9b9b9;
 
   .title {
     width: calc(100% - 100px);
@@ -52,6 +58,9 @@
   & > div {
     display: inline-block;
   }
+  input {
+    width: 300px;
+  }
 }
 
 ol.sentence-list {
@@ -95,4 +104,9 @@ a {
       border-color: orange;
     }
   }
+}
+
+.footer button {
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }

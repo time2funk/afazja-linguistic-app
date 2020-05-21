@@ -4,9 +4,7 @@
         <div class="row article-header py-5">
             <div class="container">
                 <div class="row h-100">
-
-                    <div class="left-btn-action">
-                    </div>
+                    <div class="left-btn-action"></div>
 
                     <div class="title" *ngIf="article && article.name">
                         <h1>{{ article.name }}</h1>
@@ -16,7 +14,6 @@
                         <!-- exit the article -->
                         <a class="close" (click)="backToLibrary()"></a>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -40,7 +37,6 @@
                     </ng-template>
 
                     <div class="w-100" *ngIf="currentSentence; else sentenceList">
-
                         <!-- Preview -->
                         <ng-container *ngIf="!currentSentence.preview">
                             <div class="w-100 info-text">
@@ -52,7 +48,6 @@
                                 {{ currentSentence.text }}
                             </div>
                         </ng-container>
-
                         <!-- Assignment-->
                         <ng-container *ngIf="currentSentence.preview">
                             <div class="w-100 info-text">
@@ -88,11 +83,11 @@
                             </div>
                         </ng-container>
                     </div>
-
                 </div>
             </div>
         </div>
-        <div class="row mt-4 footer" *ngIf="currentSentence">
+
+        <div class="row mt-4 mb-5 footer" *ngIf="currentSentence">
             <div class="container">
                 <div class="row">
                     <div class="w-100"><hr></div>
@@ -100,29 +95,28 @@
                 <div class="d-flex justify-content-between">
                     <!-- sentences -->
                     <div class="btn-sentences" *ngIf="currentSentence">
-                        <button class="btn btn-outline-info px-2" (click)="backToSentences()">
-                            <fa-icon [icon]="faAngleLeftIcon"></fa-icon>
-                            Zdania
+                        <button class="btn btn-outline-info px-4" (click)="backToSentences()">
+                            Lista Zdań
                         </button>
                     </div>
                     
                     <!-- do assignment -->
                     <div class="btn-assignment" *ngIf="!currentSentence.preview && !currentSentence.noAsk">
-                        <button class="btn btn-outline-info px-2" (click)="doAssignment()">
-                            Wykonaj zadanie
+                        <button class="btn btn-outline-info px-4" (click)="doAssignment()">
+                            Wykonaj Zadanie
                         </button>
                     </div>
                     
                     <!-- OR go next sentence -->
                     <div class="btn-next-sen" *ngIf="(currentSentence.preview || currentSentence.noAsk) && !isLastSentence(currentSentence.index)">
-                        <button class="btn btn-outline-info px-2" (click)="sentenceSelect(currentSentence.index + 1)">
-                            Następne zdanie
+                        <button class="btn btn-outline-info px-4" (click)="sentenceSelect(currentSentence.index + 1)">
+                            Następne Zdanie
                         </button>
                     </div>
 
                     <!-- finish -->
                     <div class="btn-next-sen" *ngIf="(currentSentence.preview || currentSentence.noAsk) && isLastSentence(currentSentence.index)">
-                        <button class="btn btn-outline-success px-2" (click)="showFinishWindow()">
+                        <button class="btn btn-outline-success px-4" (click)="showFinishWindow()">
                             Finish
                         </button>
                     </div>

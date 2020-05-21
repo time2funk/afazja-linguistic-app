@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import { Subscription } from 'rxjs';
 
+import { SizeService } from '../../../services/size.service';
 import { ApiService } from '../../../services/api.service';
 import { PreloaderService } from '../../../services/preloader.service';
 import { ModalService } from 'src/app/services/modal.service';
@@ -28,19 +29,26 @@ export class LibraryPageComponent implements OnInit, OnDestroy {
     public faBarsIcon: IconDefinition = faBars;
     public faTrashIcon: IconDefinition = faTrashAlt;
     public faEditIcon: IconDefinition = faEdit;
-    private subscribes: Subscription[] = [];
     public articleList: any[];
-    private fontSizeIncreased: boolean = false;
+    public fontSizeIncreased: boolean = false;
+    
+    private subscribes: Subscription[] = [];
 
     constructor(
         private router: Router,
         private api: ApiService,
         private loader: PreloaderService,
         private modalService: ModalService,
+        private sizeService: SizeService,
     ) { }
 
     public ngOnInit() {
         this.getArticles();
+        this.fontSizeIncreased = this.sizeService.state;
+        const subscribe = this.sizeService.sizeIncreasedState.subscribe(flag => {
+            this.fontSizeIncreased = flag;
+        })
+        this.subscribes.push(subscribe);
     }
 
     public ngOnDestroy() {
@@ -50,7 +58,7 @@ export class LibraryPageComponent implements OnInit, OnDestroy {
     }
 
     public toggleFontSize() {
-        this.fontSizeIncreased = !this.fontSizeIncreased;
+        this.sizeService.toggleSize();
     }
 
     public clearSearchInput() {

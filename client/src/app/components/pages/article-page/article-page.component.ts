@@ -34,8 +34,9 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     private articleId: string;
     private level: string;
     private subscribe: any;
-    private imagesFeature: string | boolean;
-    private imagesLength: string | number;
+    public imagesFeature: string | boolean;
+    public imagesLength: string | number;
+    public timeStart: any;
 
     constructor(
         private router: Router, // ?
@@ -52,6 +53,7 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
                 this.route.snapshot.paramMap.get('imagesLength'), 10
             );
         }
+        this.timeStart = new Date();
     }
 
     public ngOnInit() {
@@ -79,7 +81,7 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     }
 
     public showFinishWindow() {
-        const currentModalRef: NgbModalRef = this.modalService.openAssignmentFinishModal(this.article);
+        const currentModalRef: NgbModalRef = this.modalService.openAssignmentFinishModal(this.article, this.timeStart);
         currentModalRef.result.then(
             responce => {
                 if (responce && responce.action) {

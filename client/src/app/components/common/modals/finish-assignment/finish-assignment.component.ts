@@ -8,6 +8,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class FinishAssignmentComponent implements OnInit {
     @Input() config: any = {};
+    @Input() startTime: any = new Date();
+    public endTime: any = new Date();
 
     constructor(public activeModal: NgbActiveModal) { }
 
@@ -31,6 +33,23 @@ export class FinishAssignmentComponent implements OnInit {
             }, 0), 0);
             
         return `${correctAnswers} / ${questionsLength} poprawnych odpowiedzi`;
+    }
+
+    get timer() {
+        const elapsed_ms = this.endTime - this.startTime;
+        const seconds = Math.round(elapsed_ms / 1000);
+        const minutes = Math.round(seconds / 60);
+        const hours = Math.round(minutes / 60);
+        const s = this.TrimSecondsMinutes(seconds);
+        const m = this.TrimSecondsMinutes(minutes);
+        const h = this.TrimSecondsMinutes(hours);
+        return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    private TrimSecondsMinutes(elapsed) {
+        if (elapsed >= 60)
+            return this.TrimSecondsMinutes(elapsed - 60);
+        return elapsed;
     }
 
     public restart() {

@@ -15,6 +15,7 @@ import { PreloaderComponent } from './components/common/preloader/preloader.comp
 import { AssignmentConfigModalComponent } from './components/common/modals/assignment-config/assignment-config.modal.component';
 import { CarouselComponent } from './components/common/carousel/carousel.component';
 import { FinishAssignmentComponent } from './components/common/modals/finish-assignment/finish-assignment.component';
+import { SizeIncreasedDirective } from './components/directives/size-increased.directive';
 
 @NgModule({
     declarations: [
@@ -26,6 +27,7 @@ import { FinishAssignmentComponent } from './components/common/modals/finish-ass
         AssignmentConfigModalComponent,
         CarouselComponent,
         FinishAssignmentComponent,
+        SizeIncreasedDirective,
     ],
     imports: [
         NgbModule,

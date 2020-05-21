@@ -20,13 +20,14 @@ interface levelType {
     label: string,
     name: LevelsEnum,
     description?: string,
-}
+};
 interface imagesLengthOption {
     label: string;
     value: string | number;
-}
+};
 const DEFAULT_LEVEL = LevelsEnum.EASY;
 const DEFAULT_IMAGES_LENGTH_VALUE = 3;
+
 
 @Component({
     selector: 'app-assignment-config',
@@ -56,18 +57,19 @@ export class AssignmentConfigModalComponent implements OnInit {
     ];
     public imagesLengthOptions: imagesLengthOption[] = [
         {
-            label: "2 obrazka",
+            label: "2 obrazki",
             value: 2
         },
         {
-            label: "3 obrazka",
+            label: "3 obrazki",
             value: 3
         },
         {
-            label: "4 obrazka",
+            label: "4 obrazki",
             value: 4
         },
     ];
+    public levelTooltip = 'Wybrana ilość slów będzie usunięta z każdego zdania';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -78,7 +80,9 @@ export class AssignmentConfigModalComponent implements OnInit {
         this.initForm();
     }
 
-    get f() { return this.formGroup.controls; }
+    get f() {
+        return this.formGroup.controls;
+    }
 
     private initForm(): void {
         this.formGroup = this.formBuilder.group({
@@ -97,7 +101,6 @@ export class AssignmentConfigModalComponent implements OnInit {
             }
         });
     }
-
 
     public submitHandler() {
         const imagesFeature = this.f.imagesFeature.value;

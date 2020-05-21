@@ -1,5 +1,11 @@
 <div role="document" class="modal-dialog">
     <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+            <h4 class="modal-title">
+                Wyniki
+            </h4>
+        </div>
         <div class="modal-body">
             <div class="container-fluid">
                 <!-- Star Icon -->
@@ -8,9 +14,6 @@
                         <img src="assets/images/star.png" class="star-icon">
                     </div>
                 </div>
-                <!-- Title -->
-                <h4 class="modal-title text-center">Wyniki</h4>
-                <hr class="mb-5">
                 <!-- Name -->
                 <div class="row">
                     <div class="col form-group">
@@ -30,6 +33,15 @@
                                     ? 'Jedno zdanie'
                                     : config.sentences.length + ' zdań'
                             }}
+                        </div>
+                    </div>
+                </div>
+                <!-- Time -->
+                <div class="row">
+                    <div class="col form-group">
+                        <label>Czas spędzony</label>
+                        <div class="info-text">
+                            {{ timer }}
                         </div>
                     </div>
                 </div>

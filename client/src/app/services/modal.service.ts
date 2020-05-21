@@ -34,9 +34,10 @@ export class ModalService {
         return ref;
     }
 
-    public openAssignmentFinishModal(data): NgbModalRef {
+    public openAssignmentFinishModal(data, startTime): NgbModalRef {
         const ref = this.modalService.open(FinishAssignmentComponent, defaultConfig);
         ref.componentInstance.config = data;
+        ref.componentInstance.startTime = startTime;
         return ref;
     }
 }

@@ -4,16 +4,16 @@
         <div class="row">
             <div class="col-12">
                 <div class="tool-bar">
-                    <div class="btn-toolbar pt-4" role="toolbar">
-                        <button 
+                    <div class="btn-toolbar pt-4 d-block text-right" role="toolbar">
+                        <button
                             type="button" 
                             class="btn btn-light"
                             (click)="toggleFontSize()"
                         >
                             <i class="fas"
                                 [ngClass]="{
-                                    'fa-search-plus': fontSizeIncreased,
-                                    'fa-search-minus': !fontSizeIncreased
+                                    'fa-search-plus': !fontSizeIncreased,
+                                    'fa-search-minus': fontSizeIncreased
                                 }"
                             ></i>
                         </button>

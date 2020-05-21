@@ -1,5 +1,4 @@
 <div role="document" class="modal-dialog">
-
     <div class="modal-content">
         <!-- Header -->
         <div class="modal-header">
@@ -45,7 +44,14 @@
                     <!-- Level -->
                     <div class="row">
                         <div class="col form-group">
-                            <label for="form-client-name">Wybierz poziom trudności</label>
+                            <label for="form-client-name">
+                                Wybierz poziom trudności
+                                <i class="fas fa-info-circle ml-2 p-tooltip"
+                                    placement="top"
+                                    ngbTooltip="{{levelTooltip}}"
+                                    delay="50"
+                                ></i>
+                            </label>
                             <div class="radio-group">                            
                                 <div class="form-check" *ngFor="let levelType of levelTypes">
                                     <input
