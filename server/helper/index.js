@@ -42,6 +42,12 @@ module.exports.lzmaDecompress = lzmaDecompress;
 
 
 const findImages = async function (term, length = 3) {
-    return imageSearchClient.search(term, {size: 'small', num: length, gl: 'pl', lr: 'lang_pl', imgType: 'clipart', fileType: 'png'});
+    const options = {
+        size: 'small',
+        num: length,
+        lr: 'lang_pl',
+        fileType: 'png',
+    }
+    return imageSearchClient.search(term, options);
 };
 module.exports.findImages = findImages;

@@ -66,6 +66,7 @@ const ArticleController = {
         const result = [];
         const words = [
             'przyjaciela',
+            'chłopaków',
             'ciągu',
             'narodził',
             'już',
@@ -73,20 +74,18 @@ const ArticleController = {
             'Według',
             'informował',
             'długi',
-            'trudny'
+            'trudny',
+            'kota',
+            'kotu',
+            'kotem',
+            'słowem',
         ];
-        result.push(' - ----------------------------- -');
         for (let i = 0; i < words.length; i++) {
-            const lexem = nlp.getLexem(words[i]);
-            if (lexem)
-                result.push(` [ lexem ] - ${words[i]}`, lexem.getPOS());
-            else
-                result.push(` [ lexem ] - ${words[i]}`, lexem);
+            const lexem2 = nlp.getLexem(words[i]);
+            if (lexem2)
+                result.push(`${words[i]} - ${lexem2.getPOS()} = ${lexem2.toString()}`);
         }
-        result.push(' - ----------------------------- -');
-
-        const lexem = nlp.getLexem(words[0]);
-        result.push(` [ lexem ] - ${words[0]} (adj 2 noun)`, nlp.getAllFormsOf(lexem).map(a => a.toString()));
+        
         return result;
     },
 
