@@ -1,6 +1,28 @@
-.carousel-img,
-.no-picture-holder > img {
+.carousel-img {
   min-height: 200px;
   max-height: 300px;
 }
 
+.no-picture-holder {
+  position: relative;
+  height: 300px;
+
+  .wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &>i {
+      font-size: 110px;
+      color: #cfe7e8;
+    }
+    &>p {
+      font-size: 1.5em;
+      padding: 10px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      color: gray;
+    }
+  }
+}
