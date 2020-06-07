@@ -11,3 +11,21 @@
 .star-icon {
   font-size: 60px;
 }
+.tab-container {
+  height: 330px;
+  overflow-y: auto;
+}
+.correct-answers {
+  border-top: 1px solid green;
+
+  label {
+    color: green;
+  }
+}
+.wrong-answers {
+
+  border-top: 1px solid red;
+  label {
+    color: red;
+  }
+}

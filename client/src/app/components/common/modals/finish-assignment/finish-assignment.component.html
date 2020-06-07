@@ -7,72 +7,94 @@
             </h4>
         </div>
         <div class="modal-body">
-            <div class="container-fluid">
-                <!-- Star Icon -->
-                <div class="row mt-3 mb-5">
-                    <div class="col-md-12 text-center">
-                        <i class="far fa-star star-icon"></i>
-                    </div>
-                </div>
-                <!-- Name -->
+            <ngb-tabset>
+                <ngb-tab title="Informacja">
+                    <ng-template ngbTabContent>
+                        <div class="container-fluid pt-3 tab-container">
+                            <!-- Name -->
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label>Nazwa</label>
+                                    <div class="info-text">
+                                        {{ config.name }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Size -->
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label>Rozmiar</label>
+                                    <div class="info-text">
+                                        {{ 
+                                            config.sentences.length === 1 
+                                                ? 'Jedno zdanie'
+                                                : config.sentences.length + ' zdań'
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Time -->
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label>Czas spędzony</label>
+                                    <div class="info-text">
+                                        {{ timer }}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Result -->
+                            <div class="row">
+                                <div class="col form-group">
+                                    <label>Wyniki</label>
+                                    <div class="info-text">
+                                        {{ countResults() }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Odpowiedzi">
+                    <ng-template ngbTabContent>
+                        <div class="container-fluid py-3 tab-container">
+                            <div class="form-group correct-answers" *ngIf="correctAnswers.length">
+                                <label>Dobre</label>
+                                <ul>
+                                    <li *ngFor="let answer of correctAnswers">
+                                        {{ answer.text }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="form-group wrong-answers" *ngIf="wrongAnswers.length">
+                                <label>Złe</label>
+                                <ul>
+                                    <li *ngFor="let answer of wrongAnswers">
+                                        {{ answer.text }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
+        </div>
+        <div class="modal-footer">
+            <div class="container-fluid pb-3">
                 <div class="row">
-                    <div class="col form-group">
-                        <label>Nazwa</label>
-                        <div class="info-text">
-                            {{ config.name }}
-                        </div>
+                    <div class="col">
+                        <button type="button" 
+                                class="btn btn-outline-secondary btn-block"
+                                (click)="restart()">
+                            Powtórz zadanie
+                        </button>
                     </div>
-                </div>
-                <!-- Size -->
-                <div class="row">
-                    <div class="col form-group">
-                        <label>Rozmiar</label>
-                        <div class="info-text">
-                            {{ 
-                                config.sentences.length === 1 
-                                    ? 'Jedno zdanie'
-                                    : config.sentences.length + ' zdań'
-                            }}
-                        </div>
-                    </div>
-                </div>
-                <!-- Time -->
-                <div class="row">
-                    <div class="col form-group">
-                        <label>Czas spędzony</label>
-                        <div class="info-text">
-                            {{ timer }}
-                        </div>
-                    </div>
-                </div>
-                <!-- Result -->
-                <div class="row">
-                    <div class="col form-group">
-                        <label>Wyniki</label>
-                        <div class="info-text">
-                            {{ countResults() }}
-                        </div>
-                    </div>
-                </div>
-                <hr class="my-5">
-                <!-- Footer Buttons -->
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" 
-                                    class="btn btn-outline-secondary btn-block"
-                                    (click)="restart()">
-                                Powtórz zadanie
-                            </button>
-                        </div>
-                        <div class="col">
-                            <button type="button" 
-                                    class="btn btn-success btn-block" 
-                                    (click)="close()"
-                            >
-                                Biblioteka tekstów
-                            </button>
-                        </div>
+                    <div class="col">
+                        <button type="button" 
+                                class="btn btn-success btn-block" 
+                                (click)="close()"
+                        >
+                            Biblioteka tekstów
+                        </button>
                     </div>
                 </div>
             </div>

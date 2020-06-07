@@ -39,7 +39,7 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     public timeStart: any;
 
     constructor(
-        private router: Router, // ?
+        private router: Router,
         private route: ActivatedRoute,
         private loader: PreloaderService,
         private api: ApiService,

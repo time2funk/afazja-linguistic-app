@@ -10,29 +10,47 @@ export class FinishAssignmentComponent implements OnInit {
     @Input() config: any = {};
     @Input() startTime: any = new Date();
     public endTime: any = new Date();
+    public correctAnswers: any = [];
+    public wrongAnswers: any = [];
 
     constructor(public activeModal: NgbActiveModal) { }
 
-    public ngOnInit() { }
+    public ngOnInit() {
+        this.config.sentences.forEach(sentence => {
+            sentence.parts.forEach(part => {
+                if (part.type === "word" && part.ask) {
+                    switch (!!part.success) {
+                        case true: 
+                            this.correctAnswers.push(part);
+                            break;
+                        case false:
+                            this.wrongAnswers.push(part);
+                            break;
+                    }
+                }
+            })
+        });
+    }
 
     public countResults() {
-        const correctAnswers = this.config.sentences.reduce((accumulator, sentence) => 
-            accumulator + sentence.parts.reduce((child_accumulator, part) => {
-                if (part.type === "word" && part.ask && part.success) {
-                    return child_accumulator + 1;
-                }
-                return child_accumulator;
-            }, 0), 0);
+        // const correctAnswers = this.config.sentences.reduce((accumulator, sentence) => 
+        //     accumulator + sentence.parts.reduce((child_accumulator, part) => {
+        //         if (part.type === "word" && part.ask && part.success) {
+        //             return child_accumulator + 1;
+        //         }
+        //         return child_accumulator;
+        //     }, 0), 0);
         
-        const questionsLength = this.config.sentences.reduce((accumulator, sentence) => 
-            accumulator + sentence.parts.reduce((child_accumulator, part) => {
-                if (part.type === "word" && part.ask) {
-                    return child_accumulator + 1;
-                }
-                return child_accumulator;
-            }, 0), 0);
-            
-        return `${correctAnswers} / ${questionsLength} poprawnych odpowiedzi`;
+        // const questionsLength = this.config.sentences.reduce((accumulator, sentence) => 
+        //     accumulator + sentence.parts.reduce((child_accumulator, part) => {
+        //         if (part.type === "word" && part.ask) {
+        //             return child_accumulator + 1;
+        //         }
+        //         return child_accumulator;
+        //     }, 0), 0);
+        const correctAnswersLength = this.correctAnswers.length;
+        const totalAnswersLength = this.correctAnswers.length + this.correctAnswers.length;
+        return `${correctAnswersLength} / ${totalAnswersLength} poprawnych odpowiedzi`;
     }
 
     get timer() {
