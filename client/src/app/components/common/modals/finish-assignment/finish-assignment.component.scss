@@ -23,9 +23,16 @@
   }
 }
 .wrong-answers {
-
   border-top: 1px solid red;
+
   label {
     color: red;
+  }
+}
+.result-table {
+  text-align: center;
+
+  th {
+    padding: 0 10px;
   }
 }

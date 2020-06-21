@@ -16,38 +16,32 @@ export class FinishAssignmentComponent implements OnInit {
     constructor(public activeModal: NgbActiveModal) { }
 
     public ngOnInit() {
-        this.config.sentences.forEach(sentence => {
-            sentence.parts.forEach(part => {
+        this.config.sentences.forEach((sentence, sentenceIndex) => {
+            let secretIndex = 0;
+            sentence.parts.forEach((part, partIndex) => {
                 if (part.type === "word" && part.ask) {
+                    const obj = {
+                        sentenceIndex,
+                        secretIndex,
+                        answer: sentence.answers[partIndex],
+                        text: part.text,
+                    }
                     switch (!!part.success) {
-                        case true: 
-                            this.correctAnswers.push(part);
+                        case true:
+                            this.correctAnswers.push(obj);
                             break;
                         case false:
-                            this.wrongAnswers.push(part);
+                            this.wrongAnswers.push(obj);
                             break;
                     }
+                    secretIndex++;
                 }
             })
         });
+        console.log(this.config, this.correctAnswers, this.wrongAnswers)
     }
 
     public countResults() {
-        // const correctAnswers = this.config.sentences.reduce((accumulator, sentence) => 
-        //     accumulator + sentence.parts.reduce((child_accumulator, part) => {
-        //         if (part.type === "word" && part.ask && part.success) {
-        //             return child_accumulator + 1;
-        //         }
-        //         return child_accumulator;
-        //     }, 0), 0);
-        
-        // const questionsLength = this.config.sentences.reduce((accumulator, sentence) => 
-        //     accumulator + sentence.parts.reduce((child_accumulator, part) => {
-        //         if (part.type === "word" && part.ask) {
-        //             return child_accumulator + 1;
-        //         }
-        //         return child_accumulator;
-        //     }, 0), 0);
         const correctAnswersLength = this.correctAnswers.length;
         const totalAnswersLength = this.correctAnswers.length + this.correctAnswers.length;
         return `${correctAnswersLength} / ${totalAnswersLength} poprawnych odpowiedzi`;
