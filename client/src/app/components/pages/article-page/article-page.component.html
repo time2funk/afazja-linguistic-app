@@ -1,91 +1,143 @@
 <div class="article-page">
-    <div class="container-fluid">
+    <div class="container-fluid h-100">
 
-        <div class="row article-header py-5">
-            <div class="container">
-                <div class="row h-100">
-                    <div class="left-btn-action"></div>
+        <div class="row body" *ngIf="article && article.sentences && article.sentences.length">
 
-                    <div class="title" *ngIf="article && article.name">
-                        <h1>{{ article.name }}</h1>
-                    </div>
-                    
-                    <div class="right-btn-action">
-                        <!-- exit the article -->
-                        <a class="close" (click)="backToLibrary()"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <ng-template #sentenceList>
+                <div class="container mt-5">
+                    <div class="row">
 
-        <div class="row mt-3 body" *ngIf="article && article.sentences && article.sentences.length">
-            <div class="container">
-                <div class="row">
-                    <ng-template #sentenceList>
-                        <div class="w-100 info-text mt-3 text-center">
-                            Lista Zdań :
+                        <div class="offset-md-1 col-md-5">
+                            <div class="info-text text-center w-100 mt-4">
+                                Lista Zdań : 
+                            </div>
+                            <ol class="sentence-list text-center">
+                                <li *ngFor="let sentence of article.sentences;let i = index" class="mt-3 pl-2">
+                                    <a href="javascript:void(0);" (click)="sentenceSelect(sentence.index)">
+                                        <span>
+                                            Zdanie {{i + 1}}
+                                        </span>
+                                    </a>
+                                </li>
+                            </ol>
                         </div>
-                        <ol class="sentence-list text-center">
-                            <li *ngFor="let sentence of article.sentences;let i = index" class="mt-4 pl-2">
-                                <a href="javascript:void(0);" (click)="sentenceSelect(sentence.index)">
-                                    <span>
-                                        - Zdanie {{i}} -
-                                    </span>
-                                </a>
-                            </li>
-                        </ol>
-                    </ng-template>
 
-                    <div class="w-100" *ngIf="currentSentence; else sentenceList">
-                        <!-- Preview -->
-                        <ng-container *ngIf="!currentSentence.preview">
-                            <div class="w-100 info-text">
-                                <fa-icon class ="text-info" [icon]="faInfoCircleIcon"></fa-icon>
-                                Uważnie przeczytaj tekst
+                        <div class="col-4">
+                            <div class="article-wnd card mt-4">
+                                <div class="icon">
+                                    <i class="fas fa-book-open"
+                                        style="font-size: 60px;"
+                                    ></i>
+                                </div>
+                                <div class="title">
+                                    <h3>{{ article.name }}</h3>
+                                </div>
+                                <div class="info">
+                                    <p><strong>Poziom trudności:</strong> {{ levelLabel }}</p>
+                                    <p><strong>Ilosc zdań:</strong> {{ article.sentences.length }}</p>
+                                    <p><strong>Ilosc zagadek:</strong> {{ secretsLength }}</p>
+                                </div>
+                                <div class="footer">
+                                    <button
+                                        type="button"
+                                        class="btn btn-link"
+                                        (click)="refreshAssignment()"
+                                    >
+                                        <i class="fas fa-sync-alt text-success"></i>
+                                        Odśwież
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-link"
+                                        (click)="backToLibrary()"
+                                    >
+                                        <i class="fas fa-times text-danger"></i>
+                                        Zamknij
+                                    </button>
+                                </div>
                             </div>
-                            <hr>
-                            <div class="sentence-text">
-                                {{ currentSentence.text }}
-                            </div>
-                        </ng-container>
-                        <!-- Assignment-->
-                        <ng-container *ngIf="currentSentence.preview">
-                            <div class="w-100 info-text">
-                                <fa-icon class ="text-info" [icon]="faInfoCircleIcon"></fa-icon>
-                                Uzupełnij brakujące słowa
-                            </div>
-                            <hr>
-                            <div *ngIf="imagesFeature">
-                                <app-carousel [wordObject]="focusWord"></app-carousel>
-                                <hr>
-                            </div>
-                            <div class="sentence-text">
-                                <span *ngFor="let part of currentSentence.parts">
-                                    <span *ngIf="part.type === 'text' || part.type === 'word' && !part.ask">
-                                        {{ part.text }}
-                                    </span>
-                                    <span *ngIf="part.type === 'word' && part.ask"
-                                            class="word"
-                                            [ngClass]="{
-                                                'selected': focusWord && focusWord._id === part._id,
-                                                'all-good': part.success,
-                                                'error': !part.success
-                                            }" >
-                                            <!-- (focusout)="wordFocusOut()" -->
-                                        <input type="text"
-                                                (focus)="wordOnFocus(part)"
-                                                [(ngModel)]="currentSentence.answers[part.index]"
-                                                (ngModelChange)="wordChangeHandler($event, part)"
-                                                required
-                                                [attr.disabled]="part.success ? '' : null" >
-                                    </span>
-                                </span>
-                            </div>
-                        </ng-container>
+                        </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
+            </ng-template>
+
+            <div class="w-100" *ngIf="currentSentence; else sentenceList">
+                <div class="article-header py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="left-btn-action"></div>
+        
+                            <div class="title" *ngIf="article && article.name">
+                                <h1>{{ article.name }}</h1>
+                            </div>
+                            
+                            <div class="right-btn-action">
+                                <a class="close" (click)="backToLibrary()"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <!-- Preview -->
+                    <ng-container *ngIf="!currentSentence.preview">
+                        <div class="row">
+                            <div class="w-100">
+                                <div class="w-100 info-text">
+                                    <fa-icon class ="text-info" [icon]="faInfoCircleIcon"></fa-icon>
+                                    Uważnie przeczytaj tekst
+                                </div>
+                                <hr>
+                                <div class="sentence-text">
+                                    {{ currentSentence.text }}
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Assignment-->
+                    <ng-container *ngIf="currentSentence.preview">
+                        <div class="row">
+                            <div class="w-100">
+                                <div class="w-100 info-text">
+                                    <fa-icon class ="text-info" [icon]="faInfoCircleIcon"></fa-icon>
+                                    Uzupełnij brakujące słowa
+                                </div>
+                                <hr>
+                                <div *ngIf="imagesFeature">
+                                    <app-carousel [wordObject]="focusWord"></app-carousel>
+                                    <hr>
+                                </div>
+                                <div class="sentence-text">
+                                    <span *ngFor="let part of currentSentence.parts">
+                                        <span *ngIf="part.type === 'text' || part.type === 'word' && !part.ask">
+                                            {{ part.text }}
+                                        </span>
+                                        <span *ngIf="part.type === 'word' && part.ask"
+                                                class="word"
+                                                [ngClass]="{
+                                                    'selected': focusWord && focusWord._id === part._id,
+                                                    'all-good': part.success,
+                                                    'error': !part.success
+                                                }" >
+                                                <!-- (focusout)="wordFocusOut()" -->
+                                            <input type="text"
+                                                    (focus)="wordOnFocus(part)"
+                                                    [(ngModel)]="currentSentence.answers[part.index]"
+                                                    (ngModelChange)="wordChangeHandler($event, part)"
+                                                    required
+                                                    [attr.disabled]="part.success ? '' : null" >
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div> <!-- currentSentence end -->
+
+        </div> <!-- body -->
 
         <div class="row mt-4 mb-5 footer" *ngIf="currentSentence">
             <div class="container">

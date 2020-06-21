@@ -37,6 +37,8 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
     public imagesFeature: string | boolean;
     public imagesLength: string | number;
     public timeStart: any;
+    public secretsLength: number = 0;
+    public levelLabel: string = '';
 
     constructor(
         private router: Router,
@@ -103,6 +105,7 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         this.loader.show();
         this.currentSentence = null;
         this.focusWord = null;
+        this.secretsLength = 0;
         this.article.sentences.forEach(sentence => {
             if (sentence.answers) {
                 for (let [key, value] of Object.entries(sentence.answers)) {
@@ -117,7 +120,9 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
             });
         });
         this.manageSentence();
-        this.loader.hide();
+        setTimeout(() => {
+            this.loader.hide();
+        }, 100);
     }
 
     public backToSentences() {
@@ -156,11 +161,14 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         switch (this.article.level) {
             case 'hard':
                 max = words.length < 5 ? words.length : 5;
+                this.levelLabel = 'Trudny';
                 break;
             case 'medium':
                 max = words.length < 3 ? words.length : 3;
+                this.levelLabel = 'Średni';
                 break;
             case 'easy':
+                this.levelLabel = 'Łatwy';
             default:
                 max = 1;
         }
@@ -171,6 +179,7 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
                 indexes.push(randIndex);
                 words[randIndex].ask = true;
                 sentence.answers[randIndex] = null;
+                this.secretsLength++;
             }
         }
     }
