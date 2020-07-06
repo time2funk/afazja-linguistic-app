@@ -212,7 +212,6 @@ export class ArticlePageComponent implements OnInit, OnDestroy {
         this.article.sentences.forEach(sentence => {
             const words = sentence.parts.filter(i => i.type === 'word');
             if (!words.length) {
-                // sentence.preview = true;
                 sentence.noAsk = true;
             } else {
                 this.setSentenceAskWords(words, sentence);

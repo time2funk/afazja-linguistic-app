@@ -21,7 +21,7 @@ export class ApiService {
         return this.http.get<any>(`${this.url}/article/${id}`, { params: options });
     }
 
-    public createArticle(options: {name: string, /*level: string,*/ text: string}): Observable<any> {
+    public createArticle(options: {name: string, text: string}): Observable<any> {
         return this.http.post<any>(`${this.url}/article/new`, options);
     }
 

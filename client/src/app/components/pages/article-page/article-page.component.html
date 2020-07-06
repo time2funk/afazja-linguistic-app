@@ -121,7 +121,6 @@
                                                     'all-good': part.success,
                                                     'error': !part.success
                                                 }" >
-                                                <!-- (focusout)="wordFocusOut()" -->
                                             <input type="text"
                                                     (focus)="wordOnFocus(part)"
                                                     [(ngModel)]="currentSentence.answers[part.index]"
@@ -135,7 +134,7 @@
                         </div>
                     </ng-container>
                 </div>
-            </div> <!-- currentSentence end -->
+            </div> 
 
         </div> <!-- body -->
 

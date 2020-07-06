@@ -71,9 +71,6 @@ const ArticleMaker = {
 
         for (let i = 0; i < sentences.length; i++) {
             const sentence = sentences[i];
-
-            // TODO: cut white spaces at the beginning and at the end of sentence
-
             const parts = ArticleMaker.splitSentenceIntoParts(sentence, []);
             result.push({
                 index: i,
